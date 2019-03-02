@@ -4,6 +4,7 @@ import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import ru.mail.dmitrii.service.CountService;
 
 public class CountComponent extends Composite<Div> {
 
@@ -11,7 +12,7 @@ public class CountComponent extends Composite<Div> {
     public CountComponent() {
         getContent().setClassName("my-count");
 
-        countLabel = new Label("Счетчик посещений");
+        countLabel = new Label("Счетчик посещений: " + CountService.getCount());
         VerticalLayout verticalLayout = new VerticalLayout(countLabel);
 
         getContent().add(verticalLayout);
