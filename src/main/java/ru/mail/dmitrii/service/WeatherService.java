@@ -1,5 +1,8 @@
 package ru.mail.dmitrii.service;
 
+import com.jayway.jsonpath.JsonPath;
+import ru.mail.dmitrii.entity.Weather;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,18 +12,16 @@ import java.net.URL;
 public class WeatherService {
     private static String key = "94ec3a6e682444b480f154701192602";
 
-    public String getWeatherData() {
-        String city = "Novosibirsk";
-        String country = "";
+    public static Weather getWeatherData(String city) {
+        //String city = "Novosibirsk";
         URL url;
         StringBuffer response = new StringBuffer();
-        /*url = new URL("http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + country + "&units="
-                + location.getUnit() + "&mode=xml&APPID="+appID );*/
+
         try {
             url = new URL("http://api.worldweatheronline.com/premium/v1/weather.ashx?" +
                     "key=" + key +
                     "&q=" + city +
-                    "&num_of_days=3" +
+                    "&num_of_days=2" +
                     "&tp=24&format=json&mca=no");
 
 
@@ -43,7 +44,20 @@ public class WeatherService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return response.toString();
+
+        String json = response.toString();
+
+
+        String cur_t =  JsonPath.read(json, "$.data.current_condition[0].temp_C").toString();
+        String tomor_minC = JsonPath.read(json, "$.data.weather[1].mintempC").toString();
+        String tomor_maxC = JsonPath.read(json, "$.data.weather[1].maxtempC").toString();
+
+        Weather weather = new Weather();
+        weather.setTemp_C(cur_t);
+        weather.setMin_C(tomor_minC);
+        weather.setMax_C(tomor_maxC);
+
+        return weather;
     }
 
 }

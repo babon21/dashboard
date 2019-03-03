@@ -14,6 +14,10 @@ import ru.mail.dmitrii.frontend.WeatherComponent;
 import ru.mail.dmitrii.service.CurrencyService;
 import ru.mail.dmitrii.service.WeatherService;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * The main view contains a button and a click listener.
  */
@@ -38,9 +42,12 @@ public class MainView extends VerticalLayout {
         String ip = UI.getCurrent().getSession().getBrowser().getAddress();
 
         Label ipLabel = new Label("Ваш IP: " + ip);
-        Label testCount = new Label("TEST COUNT : " + count++);
 
-        add(horizontalLayout, ipLabel, testCount);
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        Date now = new Date();
+        Label stateInfo = new Label("Информация по состоянию на " + dateFormat.format(now));
+
+        add(horizontalLayout, ipLabel, stateInfo);
 
         setSizeFull();
 
