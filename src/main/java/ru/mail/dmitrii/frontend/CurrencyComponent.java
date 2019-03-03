@@ -16,11 +16,11 @@ public class CurrencyComponent extends Composite<Div> {
 
         getContent().setClassName("my-currency");
 
-        currencyLabel = new Label("Курсы валют");
+        currencyLabel = new Label("Курсы валют: " + CurrencyService.getCurrency());
 
         Button update = new Button("Обновить");
         update.addClickListener(e -> {
-            currencyLabel.setText("Курсы валют: NEW");
+            currencyLabel.setText("Курсы валют: " + CurrencyService.getCurrency());
         });
         VerticalLayout verticalLayout = new VerticalLayout(currencyLabel, update);
 
