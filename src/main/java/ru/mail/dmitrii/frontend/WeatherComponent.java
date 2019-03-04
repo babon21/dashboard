@@ -8,10 +8,20 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import ru.mail.dmitrii.entity.Weather;
 import ru.mail.dmitrii.service.WeatherService;
+import ru.mail.dmitrii.util.CitiesHelper;
+
+import java.util.ArrayList;
 
 public class WeatherComponent extends Composite<Div> {
     private Label title;
-    private ComboBox<String> citiesBox;
+
+    /**
+     * Лист наименований городов
+     */
+    private final ArrayList<String> places = new ArrayList<>();
+
+    private final ComboBox<String> citiesBox = new ComboBox<>("Местоположение", places);
+
     private Label currentWeather;
     private Label tomorrowWeather;
 
@@ -22,9 +32,18 @@ public class WeatherComponent extends Composite<Div> {
 
         getContent().setClassName("my-weather");
 
+        places.add("Москва");
+        places.add("Санкт-Петербург");
+        places.add("Новосибирск");
+
+        citiesBox.setValue(places.get(0));
+
+        citiesBox.addValueChangeListener(e -> {
+            update_info();
+        });
+
         title = new Label("Погода");
         title.setClassName("kek");
-        citiesBox = new ComboBox<>();
         currentWeather = new Label();
         tomorrowWeather = new Label();
         update_info();
@@ -39,7 +58,7 @@ public class WeatherComponent extends Composite<Div> {
     }
 
     private void update_info() {
-        Weather data = WeatherService.getWeatherData("Novosibirsk");
+        Weather data = WeatherService.getWeatherData(CitiesHelper.getCity(citiesBox.getValue()));
         currentWeather.setText("Температура текущая:" + data.getTemp_C());
         tomorrowWeather.setText("Прогноз на завтра:" +
                 "\tМинимум: " + data.getMin_C() + "C" +
