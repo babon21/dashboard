@@ -10,13 +10,11 @@ public class Currency {
     private String name;
 
     /** Текущее значение валюты по курсу Центробанка РФ */
-    private String value;
+    private String usd;
 
-    /** Стоимость при покупке валюты в Сбербанке */
-    private String buy;
+    private String eur;
 
-    /** Стоимость при продаже валюты в Сбербанке */
-    private String sell;
+
 
     /** Значение всех полей, когда сервер информера недоступен*/
     private String sign;
@@ -29,29 +27,20 @@ public class Currency {
         this.name = name;
     }
 
-    public String getValue() {
-        double d = Double.parseDouble(value);
-        return String.format("%.2f", d);
+    public String getUsd() {
+        return usd;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setUsd(String usd) {
+        this.usd = usd;
     }
 
-    public String getBuy() {
-        return buy;
+    public String getEur() {
+        return eur;
     }
 
-    public void setBuy(String buy) {
-        this.buy = buy;
-    }
-
-    public String getSell() {
-        return sell;
-    }
-
-    public void setSell(String sell) {
-        this.sell = sell;
+    public void setEur(String eur) {
+        this.eur = eur;
     }
 
     public String getSign() {

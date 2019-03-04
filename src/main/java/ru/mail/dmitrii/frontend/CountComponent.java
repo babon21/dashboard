@@ -8,12 +8,12 @@ import ru.mail.dmitrii.service.CountService;
 
 public class CountComponent extends Composite<Div> {
 
-    private Label countLabel;
     public CountComponent() {
         getContent().setClassName("my-count");
 
-        countLabel = new Label("Счетчик посещений: " + CountService.getCount());
-        VerticalLayout verticalLayout = new VerticalLayout(countLabel);
+        Label title = new Label("Счетчик посещений");
+        Label countLabel = new Label(  "" + CountService.getCount());
+        VerticalLayout verticalLayout = new VerticalLayout(title, countLabel);
         verticalLayout.setSizeFull();
         getContent().add(verticalLayout);
     }

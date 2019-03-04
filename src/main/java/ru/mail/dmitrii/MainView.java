@@ -29,10 +29,12 @@ public class MainView extends VerticalLayout {
     //private WeatherService weatherService = new WeatherService();
     //private CurrencyService currencyService = new CurrencyService();
     static int count = 0;
+    private Label stateInfo;
 
     public MainView() {
-        WeatherComponent weatherComponent = new WeatherComponent();
-        CurrencyComponent currencyComponent = new CurrencyComponent();
+        setClassName("my-root");
+        WeatherComponent weatherComponent = new WeatherComponent(this);
+        CurrencyComponent currencyComponent = new CurrencyComponent(this);
         CountComponent countComponent = new CountComponent();
         //addListener()
         HorizontalLayout horizontalLayout = new HorizontalLayout(weatherComponent,
@@ -46,11 +48,20 @@ public class MainView extends VerticalLayout {
 
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         Date now = new Date();
-        Label stateInfo = new Label("Информация по состоянию на " + dateFormat.format(now));
+        stateInfo = new Label("Информация по состоянию на " + dateFormat.format(now));
 
         horizontalLayout.setSizeFull();
-        add(horizontalLayout, ipLabel, stateInfo);
+
+        HorizontalLayout timeIP = new HorizontalLayout(stateInfo, ipLabel);
+
+        add(horizontalLayout, timeIP);
         setSizeFull();
 
+    }
+
+    public void updateTime() {
+        Date now = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        stateInfo.setText("Информация по состоянию на " + dateFormat.format(now));
     }
 }
