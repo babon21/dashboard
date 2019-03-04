@@ -14,6 +14,7 @@ import ru.mail.dmitrii.frontend.WeatherComponent;
 import ru.mail.dmitrii.service.CurrencyService;
 import ru.mail.dmitrii.service.WeatherService;
 
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,8 +48,8 @@ public class MainView extends VerticalLayout {
         Date now = new Date();
         Label stateInfo = new Label("Информация по состоянию на " + dateFormat.format(now));
 
+        horizontalLayout.setSizeFull();
         add(horizontalLayout, ipLabel, stateInfo);
-
         setSizeFull();
 
     }

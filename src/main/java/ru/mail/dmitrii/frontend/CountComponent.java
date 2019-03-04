@@ -14,7 +14,7 @@ public class CountComponent extends Composite<Div> {
 
         countLabel = new Label("Счетчик посещений: " + CountService.getCount());
         VerticalLayout verticalLayout = new VerticalLayout(countLabel);
-
+        verticalLayout.setSizeFull();
         getContent().add(verticalLayout);
     }
 }

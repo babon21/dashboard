@@ -54,7 +54,9 @@ public class WeatherComponent extends Composite<Div> {
 
         VerticalLayout verticalLayout = new VerticalLayout(title, citiesBox,
                 currentWeather, tomorrowWeather, update);
+        verticalLayout.setSizeFull();
         getContent().add(verticalLayout);
+
     }
 
     private void update_info() {

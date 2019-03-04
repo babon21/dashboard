@@ -23,7 +23,7 @@ public class CurrencyComponent extends Composite<Div> {
             currencyLabel.setText("Курсы валют: " + CurrencyService.getCurrency());
         });
         VerticalLayout verticalLayout = new VerticalLayout(currencyLabel, update);
-
+        verticalLayout.setSizeFull();
         getContent().add(verticalLayout);
     }
 }
