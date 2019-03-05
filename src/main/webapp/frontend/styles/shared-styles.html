@@ -1,55 +1,127 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+
+<dom-module id="my-text-field" theme-for="vaadin-text-field">
+    <template>
+        <style>
+
+        [part="input-field"] {
+        background-color: white;
+            color: #1560BD;
+
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+        }
+
+        </style>
+    </template>
+</dom-module>
+
+
+
 <custom-style>
     <style>
     /* Example global style */
-    html {
-      font-size: 1em;
-      color: black;
+    .today-weather {
+        margin: 0% 2% 0% 2.5%;
+        width: 220px;
+        height: 200px;
+        border: 1px solid LightCyan;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
     }
 
-    .kek {
-        color: blue
+    html {
+      font-size: 1em;
+        color: #1560BD;
+    }
+
+    .label {
+        line-height: 1.5;
     }
 
     .my-weather {
-        background: linear-gradient(180deg, #B0E0E6, #C0C0C0);
-
-        margin: 8% 4% 4% 8%;
-        width: 360px;
-        height: 360px;
-        border: 3px solid #191970;
+        background: linear-gradient(180deg, #8DD6F7,#FFFFFF );
+        font: 16pt/15pt Gill Sans, sans-serif;
+        margin: 5% 2.5% 2.5% 5%;
+        width: 450px;
+        height: 390px;
+        border: 1px solid LightCyan;
         border-radius: 10px;
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     }
 
     .my-currency {
-        background: linear-gradient(180deg, rgb(176,200,230), #C0C0C0);
+        background: linear-gradient(180deg, #8DD6F7, #FFFFFF);
 
-        margin: 8% 4% 4% 4%;
-        width: 360px;
-        height: 360px;
-        border: 3px solid black;
+        margin: 5% 2.5% 2.5% 2.5%;
+        width: 300px;
+        height: 390px;
+        border: 1px solid LightCyan;
         border-radius: 10px;
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
     }
 
     .my-count {
-        background: linear-gradient(180deg, #B0E0E6, #C0C0C0);
+        background:linear-gradient(180deg, #8DD6F7, #FFFFFF);
 
-        margin: 8% 8% 4% 4%;
-        width: 360px;
-        height: 360px;
-        border: 3px solid black;
+        margin: 5% 5% 2.5% 2.5%;
+        width: 300px;
+        height: 390px;
+        border:1px solid LightCyan;
         border-radius: 10px;
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     }
 
     .my-root {
-        background: linear-gradient(180deg, #B0C4DE, #DCDCDC);
+        background:linear-gradient(180deg, #87CEEB,#FFFFFF,#F0E68C);
     }
 
-    .button {
+    .weather-button {
         background: white;
-        color: black;
+        background-color: white;
+
+        box-shadow: 0 7px 14px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+        margin-left: 38%;
+        margin-top: 5%;
     }
+
+    .currency-button {
+        background: white;
+        background-color: white;
+        color: #1560BD;
+        box-shadow: 0 7px 14px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+        margin-left: 29%;
+    }
+
+    .weather-title {
+        font-size: 18pt;
+        color: #1560BD;
+        font-weight: bold;
+        margin-left: 40%;
+
+    }
+
+    .currency-title {
+        font-size: 18pt;
+        color: #1560BD;
+        font-weight: bold;
+        margin-left: 21%;
+        margin-top: 2%;
+    }
+
+    .count-title {
+        font-size: 18pt;
+        color: #1560BD;
+        font-weight: bold;
+        margin-left: 3%;
+        margin-top: 2%;
+    }
+
+
+
     </style>
+
 </custom-style>

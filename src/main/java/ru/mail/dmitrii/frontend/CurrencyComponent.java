@@ -22,11 +22,13 @@ public class CurrencyComponent extends Composite<Div> {
 
         Currency currency = CurrencyService.getCurrency();
         currencyLabel = new Label("Курсы валют");
+        currencyLabel.setClassName("currency-title");
         Label usdLabel = new Label("USD/RUB: " + currency.getUsd());
         Label eurLabel = new Label("EUR/RUB" + currency.getEur());
 
         Button update = new Button("Обновить");
-        update.setClassName("button");
+        update.setClassName("currency-button");
+
         update.addClickListener(e -> {
             usdLabel.setText("USD/RUB: " + currency.getUsd());
             eurLabel.setText("EUR/RUB" + currency.getEur());
