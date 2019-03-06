@@ -13,7 +13,6 @@ public class WeatherService {
     private static String key = "94ec3a6e682444b480f154701192602";
 
     public static Weather getWeatherData(String city) {
-        //String city = "Novosibirsk";
         URL url;
         StringBuffer response = new StringBuffer();
 
@@ -49,13 +48,36 @@ public class WeatherService {
 
 
         String cur_t =  JsonPath.read(json, "$.data.current_condition[0].temp_C").toString();
-        String tomor_minC = JsonPath.read(json, "$.data.weather[1].mintempC").toString();
-        String tomor_maxC = JsonPath.read(json, "$.data.weather[1].maxtempC").toString();
+        String feelsC =  JsonPath.read(json, "$.data.current_condition[0].FeelsLikeC").toString();
+        String humidity =  JsonPath.read(json, "$.data.current_condition[0].humidity").toString();
+
 
         Weather weather = new Weather();
-        weather.setTemp_C(cur_t);
-        weather.setMin_C(tomor_minC);
-        weather.setMax_C(tomor_maxC);
+        weather.setCur_C(cur_t);
+        weather.setFeelsLikeC(feelsC);
+        weather.setHumidity(humidity);
+
+
+        String wind = JsonPath.read(json, "$.data.current_condition[0].windspeedKmph").toString();
+        double windValue = Double.parseDouble(wind);
+        windValue *= 0.28;
+        windValue = (double) Math.round(windValue * 10) / 10;
+        weather.setWind(String.valueOf(windValue));
+
+        String pressure =  JsonPath.read(json, "$.data.current_condition[0].pressure").toString();
+        double pressureValue = Double.parseDouble(pressure);
+
+        //перевод из милли бар в мм рт.ст.
+        pressureValue *= 0.750064;
+
+        //округление до целого
+        weather.setPressure(String.valueOf((int) Math.round(pressureValue)));
+
+        String tomorMinC = JsonPath.read(json, "$.data.weather[1].mintempC").toString();
+        String tomorMaxC = JsonPath.read(json, "$.data.weather[1].maxtempC").toString();
+        weather.setMin_C(tomorMinC);
+        weather.setMax_C(tomorMaxC);
+
 
         return weather;
     }

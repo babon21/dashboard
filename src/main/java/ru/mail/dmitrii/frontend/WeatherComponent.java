@@ -5,7 +5,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import ru.mail.dmitrii.MainView;
@@ -71,7 +70,7 @@ public class WeatherComponent extends Composite<Div> {
 
     private void update_info() {
         Weather data = WeatherService.getWeatherData(CitiesHelper.getCity(citiesBox.getValue()));
-        todayWeather.setTemperature(data.getTemp_C());
+        todayWeather.setTemperature(data.getCur_C());
         tomorrowWeather.setTemperature("Минимум: " + data.getMin_C() + DEGREE + "C, " +
                 "Максимум: " + data.getMax_C() + DEGREE + "C");
     }

@@ -2,3 +2,4 @@
 .idea/
 LICENSE.md
 /target
+src/main/java/ru/mail/dmitrii/util/MyMain.java
