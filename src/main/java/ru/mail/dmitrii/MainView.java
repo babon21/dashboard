@@ -38,11 +38,12 @@ public class MainView extends VerticalLayout {
         WeatherComponent weatherComponent = new WeatherComponent(this);
         CurrencyComponent currencyComponent = new CurrencyComponent(this);
         CountComponent countComponent = new CountComponent();
-        //addListener()
-        HorizontalLayout horizontalLayout = new HorizontalLayout(weatherComponent,
-                currencyComponent,
-                countComponent);
-        //UI.getCurrent().getSession().getBrowser()
+
+        VerticalLayout verticalLayout = new VerticalLayout(currencyComponent, countComponent);
+        VerticalLayout weatherLayout = new VerticalLayout(weatherComponent);
+        HorizontalLayout horizontalLayout = new HorizontalLayout(weatherLayout, verticalLayout);
+        //horizontalLayout.setSizeFull();
+        //verticalLayout.setSizeFull();
 
         String ip = UI.getCurrent().getSession().getBrowser().getAddress();
 

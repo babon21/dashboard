@@ -1,22 +1,30 @@
 package ru.mail.dmitrii.entity;
 
 public class Weather {
-    // Текущая погода
-    private String cur_C;
+
+    /* Текущая погода
+    *  - текущая температура
+    *  - ощущается как
+    *  - ветер м/c
+    *  - влажность (%)
+    *  - давление мм рт.ст.
+    * */
+    private String curC;
 
     private String feelsLikeC;
 
-    // метр в секунду
     private String wind;
 
-    // в процентах
     private String humidity;
 
-    // в мм рт.ст.
     private String pressure;
 
+    private String desc;
 
-    // Погода на завтра
+
+    /* Погода на завтра
+    *
+    * */
     private String min_C;
 
     private String max_C;
@@ -30,14 +38,20 @@ public class Weather {
         this.wind = wind;
     }
 
-
-
-    public String getCur_C() {
-        return cur_C;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setCur_C(String cur_C) {
-        this.cur_C = cur_C;
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getCurC() {
+        return curC;
+    }
+
+    public void setCurC(String curC) {
+        this.curC = curC;
     }
 
     public String getMin_C() {
@@ -82,7 +96,7 @@ public class Weather {
 
     @Override
     public String toString() {
-        return "Current temp: " + cur_C + "\nFeels like C: " + feelsLikeC +
+        return "Current temp: " + curC + "\nFeels like C: " + feelsLikeC +
                 "\nCurrent wind: " + wind + "\nHumidity: " + humidity +
                 "\nPressure: " + pressure +
                 "\nMin temp: " + max_C + "\nMin temp: " + min_C + "\n";

@@ -7,6 +7,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import ru.mail.dmitrii.MainView;
 import ru.mail.dmitrii.entity.Weather;
 import ru.mail.dmitrii.service.WeatherService;
@@ -14,9 +15,11 @@ import ru.mail.dmitrii.util.CitiesHelper;
 
 import java.util.ArrayList;
 
+import static ru.mail.dmitrii.util.WeatherHelper.DEGREE;
+
 public class WeatherComponent extends Composite<Div> {
     private Label title;
-    final String DEGREE = "\u00b0";
+
 
     /**
      * Лист наименований городов
@@ -25,8 +28,7 @@ public class WeatherComponent extends Composite<Div> {
 
     private final ComboBox<String> citiesBox = new ComboBox<>();
 
-    //private Label currentWeather = new Label();
-    //private Label tomorrowLabel = new Label();
+
     private Label tomorrowMin = new Label();
     private Label tomorrowMax = new Label();
 
@@ -37,19 +39,22 @@ public class WeatherComponent extends Composite<Div> {
 
     public WeatherComponent(MainView view) {
         HorizontalLayout weatherTable = new HorizontalLayout(todayWeather, tomorrowWeather);
-
+        
         getContent().setClassName("my-weather");
-        //currentWeather.setClassName("label");
         citiesBox.setItems(places);
+
         places.add("Москва");
         places.add("Санкт-Петербург");
         places.add("Новосибирск");
 
         citiesBox.setValue(places.get(0));
         citiesBox.addValueChangeListener(e -> {
+            if(citiesBox.isEmpty())
+                citiesBox.setValue("Новосибирск");
             update_info();
             view.updateTime();
         });
+
 
         title = new Label("Погода");
         title.setClassName("weather-title");
@@ -69,9 +74,9 @@ public class WeatherComponent extends Composite<Div> {
     }
 
     private void update_info() {
-        Weather data = WeatherService.getWeatherData(CitiesHelper.getCity(citiesBox.getValue()));
-        todayWeather.setTemperature(data.getCur_C());
-        tomorrowWeather.setTemperature("Минимум: " + data.getMin_C() + DEGREE + "C, " +
-                "Максимум: " + data.getMax_C() + DEGREE + "C");
+        Weather weather = WeatherService.getWeatherData(CitiesHelper.getCity(citiesBox.getValue()));
+        todayWeather.update(weather);
+        tomorrowWeather.setTemperature("Минимум: " + weather.getMin_C() + DEGREE + "C, " +
+                "Максимум: " + weather.getMax_C() + DEGREE + "C");
     }
 }

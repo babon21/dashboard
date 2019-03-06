@@ -9,7 +9,7 @@ public class TomorrowWeather extends Composite<Div> {
 
     private Label temp = new Label();
     public TomorrowWeather() {
-        getContent().setClassName("today-weather");
+        getContent().setClassName("tomorrow-weather");
 
         VerticalLayout verticalLayout = new VerticalLayout(temp);
         verticalLayout.setSizeFull();
