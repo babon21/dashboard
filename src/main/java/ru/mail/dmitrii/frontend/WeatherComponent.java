@@ -75,7 +75,6 @@ public class WeatherComponent extends Composite<Div> {
     private void update_info() {
         Weather weather = WeatherService.getWeatherData(CitiesHelper.getCity(citiesBox.getValue()));
         todayWeather.update(weather);
-        tomorrowWeather.setTemperature("Минимум: " + weather.getMinC() + DEGREE + "C, " +
-                "Максимум: " + weather.getMaxC() + DEGREE + "C");
+        tomorrowWeather.update(weather);
     }
 }

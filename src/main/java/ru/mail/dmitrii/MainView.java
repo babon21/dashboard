@@ -1,20 +1,16 @@
 package ru.mail.dmitrii;
 
-import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.page.Page;
-import com.vaadin.flow.component.textfield.TextField;
+
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
 import ru.mail.dmitrii.frontend.CountComponent;
 import ru.mail.dmitrii.frontend.CurrencyComponent;
 import ru.mail.dmitrii.frontend.WeatherComponent;
-import ru.mail.dmitrii.service.CurrencyService;
-import ru.mail.dmitrii.service.WeatherService;
 
 
 import java.text.DateFormat;
@@ -42,9 +38,8 @@ public class MainView extends VerticalLayout {
         VerticalLayout verticalLayout = new VerticalLayout(currencyComponent, countComponent);
         VerticalLayout weatherLayout = new VerticalLayout(weatherComponent);
         HorizontalLayout horizontalLayout = new HorizontalLayout(weatherLayout, verticalLayout);
-        //horizontalLayout.setSizeFull();
+        horizontalLayout.setSizeFull();
         //verticalLayout.setSizeFull();
-
         String ip = UI.getCurrent().getSession().getBrowser().getAddress();
 
         Label ipLabel = new Label("Ваш IP: " + ip);
