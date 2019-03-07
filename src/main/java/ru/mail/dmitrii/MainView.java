@@ -24,9 +24,7 @@ import java.util.Date;
 @Route("")
 @PWA(name = "Project Base for Vaadin Flow", shortName = "Project Base")
 public class MainView extends VerticalLayout {
-    //private WeatherService weatherService = new WeatherService();
-    //private CurrencyService currencyService = new CurrencyService();
-    static int count = 0;
+
     private Label stateInfo;
 
     public MainView() {
@@ -39,7 +37,6 @@ public class MainView extends VerticalLayout {
         VerticalLayout weatherLayout = new VerticalLayout(weatherComponent);
         HorizontalLayout horizontalLayout = new HorizontalLayout(weatherLayout, verticalLayout);
         horizontalLayout.setSizeFull();
-        //verticalLayout.setSizeFull();
         String ip = UI.getCurrent().getSession().getBrowser().getAddress();
 
         Label ipLabel = new Label("Ваш IP: " + ip);
