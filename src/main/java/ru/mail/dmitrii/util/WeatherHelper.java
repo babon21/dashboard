@@ -47,8 +47,18 @@ public class WeatherHelper {
 
         String tomorMinC = JsonPath.read(json, "$.data.weather[1].mintempC").toString();
         String tomorMaxC = JsonPath.read(json, "$.data.weather[1].maxtempC").toString();
-        weather.setMin_C(tomorMinC);
-        weather.setMax_C(tomorMaxC);
+        weather.setMinC(tomorMinC);
+        weather.setMaxC(tomorMaxC);
+
+        String afternoon = JsonPath.read(json, "$.data.weather[1].hourly[2].tempC").toString();
+        String afternoonDesc = JsonPath.read(json, "$.data.weather[1].hourly[2].lang_ru[0].value").toString();
+        String evening = JsonPath.read(json, "$.data.weather[1].hourly[3].tempC").toString();
+        String eveningDesc = JsonPath.read(json, "$.data.weather[1].hourly[3].lang_ru[0].value").toString();
+
+        weather.setAfternoon(afternoon);
+        weather.setAfternoonDesc(afternoonDesc);
+        weather.setEvening(evening);
+        weather.setEveningDesc(eveningDesc);
 
         return weather;
     }

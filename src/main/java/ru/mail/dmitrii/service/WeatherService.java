@@ -19,7 +19,7 @@ public class WeatherService {
 
         try {
             url = new URL("http://api.worldweatheronline.com/premium/v1/weather.ashx?" +
-                    "key=" + key +"&q=" + city + "&num_of_days=2&tp=24&format=json&mca=no&lang=ru");
+                    "key=" + key +"&q=" + city + "&num_of_days=2&tp=6&format=json&mca=no&lang=ru");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             InputStream is;
             int status = connection.getResponseCode();

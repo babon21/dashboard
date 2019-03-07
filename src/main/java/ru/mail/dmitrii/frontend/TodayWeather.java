@@ -25,15 +25,17 @@ public class TodayWeather extends Composite<Div> {
         VerticalLayout now = new VerticalLayout(title, curC, desc);
         now.setAlignItems(FlexComponent.Alignment.CENTER);
         now.setClassName("now-layout");
-        now.setWidth("40%");
+        //now.setWidth("150px");
+        now.setSizeFull();
+
 
         VerticalLayout extra = new VerticalLayout(feelsLikeC, pressure, humidity, wind);
-        extra.setAlignItems(FlexComponent.Alignment.STRETCH);
+        //extra.setAlignItems(FlexComponent.Alignment.STRETCH);
         extra.setClassName("extra-layout");
 
         HorizontalLayout content = new HorizontalLayout(now, extra);
+        content.setSpacing(false);
 
-        //now.setSizeFull();
         //extra.setSizeFull();
         content.setSizeFull();
 
@@ -57,9 +59,9 @@ public class TodayWeather extends Composite<Div> {
     public void update(Weather weather) {
         curC.setText(weather.getCurC() + DEGREE + "C");
         desc.setText(weather.getDesc());
-        feelsLikeC.setText("Ощущается как: " + weather.getFeelsLikeC() + DEGREE + "C");
-        wind.setText("ветер: " + weather.getWind() + " м/c");
-        humidity.setText("влажность: " + weather.getHumidity() + "%");
-        pressure.setText("давление: " + weather.getPressure() + " мм рт.ст.");
+        feelsLikeC.setText("Ощущается " + weather.getFeelsLikeC() + DEGREE + "C");
+        wind.setText("ветер     " + weather.getWind() + " м/c");
+        humidity.setText("влажность       " + weather.getHumidity() + "%");
+        pressure.setText("давление        " + weather.getPressure() + " мм");
     }
 }

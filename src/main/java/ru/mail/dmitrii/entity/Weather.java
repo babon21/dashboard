@@ -25,10 +25,49 @@ public class Weather {
     /* Погода на завтра
     *
     * */
-    private String min_C;
+    private String minC;
 
-    private String max_C;
+    private String maxC;
 
+    private String afternoon;
+
+    private String afternoonDesc;
+
+    private String evening;
+
+    private String eveningDesc;
+
+    public String getAfternoonDesc() {
+        return afternoonDesc;
+    }
+
+    public void setAfternoonDesc(String afternoonDesc) {
+        this.afternoonDesc = afternoonDesc;
+    }
+
+    public String getEveningDesc() {
+        return eveningDesc;
+    }
+
+    public void setEveningDesc(String eveningDesc) {
+        this.eveningDesc = eveningDesc;
+    }
+
+    public String getAfternoon() {
+        return afternoon;
+    }
+
+    public void setAfternoon(String afternoon) {
+        this.afternoon = afternoon;
+    }
+
+    public String getEvening() {
+        return evening;
+    }
+
+    public void setEvening(String evening) {
+        this.evening = evening;
+    }
 
     public String getWind() {
         return wind;
@@ -54,20 +93,20 @@ public class Weather {
         this.curC = curC;
     }
 
-    public String getMin_C() {
-        return min_C;
+    public String getMinC() {
+        return minC;
     }
 
-    public void setMin_C(String min_C) {
-        this.min_C = min_C;
+    public void setMinC(String minC) {
+        this.minC = minC;
     }
 
-    public String getMax_C() {
-        return max_C;
+    public String getMaxC() {
+        return maxC;
     }
 
-    public void setMax_C(String max_C) {
-        this.max_C = max_C;
+    public void setMaxC(String maxC) {
+        this.maxC = maxC;
     }
 
     public String getFeelsLikeC() {
@@ -99,6 +138,6 @@ public class Weather {
         return "Current temp: " + curC + "\nFeels like C: " + feelsLikeC +
                 "\nCurrent wind: " + wind + "\nHumidity: " + humidity +
                 "\nPressure: " + pressure +
-                "\nMin temp: " + max_C + "\nMin temp: " + min_C + "\n";
+                "\nMin temp: " + maxC + "\nMin temp: " + minC + "\n";
     }
 }
