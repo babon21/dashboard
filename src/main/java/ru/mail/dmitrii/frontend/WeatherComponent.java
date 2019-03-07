@@ -14,7 +14,6 @@ import ru.mail.dmitrii.util.CitiesHelper;
 
 import java.util.ArrayList;
 
-import static ru.mail.dmitrii.util.WeatherHelper.DEGREE;
 
 public class WeatherComponent extends Composite<Div> {
     private Label title;
@@ -26,10 +25,6 @@ public class WeatherComponent extends Composite<Div> {
     private final ArrayList<String> places = new ArrayList<>();
 
     private final ComboBox<String> citiesBox = new ComboBox<>();
-
-
-    private Label tomorrowMin = new Label();
-    private Label tomorrowMax = new Label();
 
     private TodayWeather todayWeather = new TodayWeather();
     private TomorrowWeather tomorrowWeather = new TomorrowWeather();;

@@ -1,7 +1,6 @@
 package ru.mail.dmitrii.frontend;
 
 import com.vaadin.flow.component.Composite;
-import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -26,7 +25,7 @@ public class TomorrowWeather extends Composite<Div> {
         title.setClassName("tomorrow-title");
         Label afternoonTitle = new Label("День");
         Label eveningTitle = new Label("Вечер");
-        //afternoonTitle.setClassName("tomorrow");
+
         afternoonTemp.setClassName("tomorrow-temp");
         eveningTemp.setClassName("tomorrow-temp");
         afternoonDesc.setClassName("tomorrow-desc");
@@ -38,13 +37,11 @@ public class TomorrowWeather extends Composite<Div> {
         afternoonLayout.setAlignItems(FlexComponent.Alignment.CENTER);
 
         afternoonLayout.setClassName("tomorrow-layout");
-        //afternoonLayout.setSizeFull();
         VerticalLayout eveningLayout = new VerticalLayout(eveningTitle, eveningTemp,
                 eveningDesc);
 
         eveningLayout.setAlignItems(FlexComponent.Alignment.CENTER);
         eveningLayout.setClassName("tomorrow-layout");
-        //eveningLayout.setSizeFull();
 
 
         HorizontalLayout horizontalLayout = new HorizontalLayout(afternoonLayout, eveningLayout);

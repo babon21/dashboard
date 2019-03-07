@@ -25,18 +25,14 @@ public class TodayWeather extends Composite<Div> {
         VerticalLayout now = new VerticalLayout(title, curC, desc);
         now.setAlignItems(FlexComponent.Alignment.CENTER);
         now.setClassName("now-layout");
-        //now.setWidth("150px");
         now.setSizeFull();
 
-
         VerticalLayout extra = new VerticalLayout(feelsLikeC, pressure, humidity, wind);
-        //extra.setAlignItems(FlexComponent.Alignment.STRETCH);
         extra.setClassName("extra-layout");
 
         HorizontalLayout content = new HorizontalLayout(now, extra);
         content.setSpacing(false);
 
-        //extra.setSizeFull();
         content.setSizeFull();
 
         desc.setClassName("desc");
@@ -49,11 +45,7 @@ public class TodayWeather extends Composite<Div> {
         wind.setClassName("weather-extra");
 
         getContent().setClassName("today-weather");
-        //VerticalLayout verticalLayout = new VerticalLayout(title, curC, feelsLikeC,
-         //       wind, humidity, pressure);
-        //verticalLayout.setSizeFull();
         getContent().add(content);
-        //verticalLayout.setSizeFull();
     }
 
     public void update(Weather weather) {

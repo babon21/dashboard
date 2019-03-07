@@ -1,6 +1,5 @@
 package ru.mail.dmitrii.service;
 
-import com.jayway.jsonpath.JsonPath;
 import ru.mail.dmitrii.entity.Weather;
 import ru.mail.dmitrii.util.WeatherHelper;
 
