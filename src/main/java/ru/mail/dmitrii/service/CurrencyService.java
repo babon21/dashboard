@@ -12,8 +12,22 @@ public class CurrencyService {
         try {
             String jsonCbr = JsonHelper.jsonToString(URL_C);
 
-            currency.setUsd(JsonPath.read(jsonCbr, "$.Valute.USD.Value").toString());
-            currency.setEur(JsonPath.read(jsonCbr, "$.Valute.EUR.Value").toString());
+            String usd = JsonPath.read(jsonCbr, "$.Valute.USD.Value").toString();
+            String usdPrev = JsonPath.read(jsonCbr, "$.Valute.USD.Previous").toString();
+
+            String eur = JsonPath.read(jsonCbr, "$.Valute.EUR.Value").toString();
+            String eurPrev = JsonPath.read(jsonCbr, "$.Valute.EUR.Previous").toString();
+
+            float usdDiff = Float.parseFloat(usd) - Float.parseFloat(usdPrev);
+            usdDiff = (float) Math.round(usdDiff * 1000) / 1000;
+            float eurDiff = Float.parseFloat(eur) - Float.parseFloat(eurPrev);
+            eurDiff = (float) Math.round(eurDiff * 1000) / 1000;
+
+            currency.setUsd(usd);
+            currency.setUsdDiff(usdDiff);
+
+            currency.setEur(eur);
+            currency.setEurDiff(eurDiff);
         } catch (Exception e) {
             e.printStackTrace();
         }

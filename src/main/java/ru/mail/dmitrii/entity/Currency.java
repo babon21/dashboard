@@ -14,18 +14,30 @@ public class Currency {
 
     private String eur;
 
+    private float usdDiff;
 
+    private float eurDiff;
+
+    public float getUsdDiff() {
+        return usdDiff;
+    }
+
+    public void setUsdDiff(float usdDiff) {
+        this.usdDiff = usdDiff;
+    }
+
+    public float getEurDiff() {
+        return eurDiff;
+    }
+
+    public void setEurDiff(float eurDiff) {
+        this.eurDiff = eurDiff;
+    }
 
     /** Значение всех полей, когда сервер информера недоступен*/
     private String sign;
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getUsd() {
         return usd;
