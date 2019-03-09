@@ -2,12 +2,13 @@ package ru.mail.dmitrii.service;
 
 import com.jayway.jsonpath.JsonPath;
 import ru.mail.dmitrii.entity.Currency;
+import ru.mail.dmitrii.exception.UserException;
 import ru.mail.dmitrii.util.JsonHelper;
 
 public class CurrencyService {
     private static final String URL_C = "https://www.cbr-xml-daily.ru/daily_json.js";
 
-    public static Currency getCurrency() {
+    public static Currency getCurrency() throws UserException {
         Currency currency = new Currency();
         try {
             String jsonCbr = JsonHelper.jsonToString(URL_C);
@@ -29,7 +30,7 @@ public class CurrencyService {
             currency.setEur(eur);
             currency.setEurDiff(eurDiff);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new UserException("Ошибка запроса валюты");
         }
         return currency;
     }

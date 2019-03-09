@@ -12,6 +12,8 @@ import static ru.mail.dmitrii.util.WeatherHelper.DEGREE;
 
 public class TodayWeather extends Composite<Div> {
 
+    private Label title;
+
     private Label curC = new Label();
     private Label feelsLikeC = new Label();
     private Label wind = new Label();
@@ -19,10 +21,13 @@ public class TodayWeather extends Composite<Div> {
     private Label pressure = new Label();
     private Label desc = new Label();
 
-    public TodayWeather() {
-        Label title = new Label("Сейчас");
+    private VerticalLayout now;
 
-        VerticalLayout now = new VerticalLayout(title, curC, desc);
+
+    public TodayWeather() {
+        title = new Label("Сейчас");
+
+        now = new VerticalLayout(title, curC, desc);
         now.setAlignItems(FlexComponent.Alignment.CENTER);
         now.setClassName("now-layout");
         now.setSizeFull();
@@ -32,7 +37,7 @@ public class TodayWeather extends Composite<Div> {
 
         HorizontalLayout content = new HorizontalLayout(now, extra);
         content.setSpacing(false);
-
+        content.remove();
         content.setSizeFull();
 
         desc.setClassName("desc");

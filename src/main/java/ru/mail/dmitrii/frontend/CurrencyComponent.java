@@ -6,11 +6,15 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import org.apache.log4j.Logger;
 import ru.mail.dmitrii.MainView;
 import ru.mail.dmitrii.entity.Currency;
+import ru.mail.dmitrii.entity.CustomNotification;
+import ru.mail.dmitrii.exception.UserException;
 import ru.mail.dmitrii.service.CurrencyService;
 
 public class CurrencyComponent extends Composite<Div> {
@@ -22,15 +26,63 @@ public class CurrencyComponent extends Composite<Div> {
     private Label usdDiff = new Label();
     private Label eurDiff = new Label();
 
-    private Icon usdIconDiff;
-    private Icon eurIconDiff;
+    private Icon usdIconDiff = new Icon();
+    private Icon eurIconDiff = new Icon();
+
+    private HorizontalLayout currencyLayout;
+    private VerticalLayout verticalLayout;
+    private Label currencyLabel;
+    private Button updateButton;
+    private VerticalLayout icons;
+
+    private static final Logger LOGGER = Logger.getLogger(CurrencyComponent.class);
+
+    private Label errorLabel = new Label("Сервис недоступен");
 
 
     public CurrencyComponent(MainView view) {
+        icons = new VerticalLayout(usdIconDiff, eurIconDiff);
+        currencyLabel = new Label("Курсы валют");
+
+        setStyle();
+        VerticalLayout mainValues = new VerticalLayout(usdLabel, eurLabel);
+        mainValues.setWidth("80%");
+        mainValues.getStyle().set("padding-left", "8%");
+
+        VerticalLayout diffValues = new VerticalLayout(usdDiff, eurDiff);
+        diffValues.getStyle().set("margin-top", "1%");
+        diffValues.getStyle().set("margin-left", "0%");
+        diffValues.getStyle().set("padding-left", "0%");
+        diffValues.setWidth("35%");
+
+        currencyLayout = new HorizontalLayout(mainValues, icons,diffValues);
+        currencyLayout.setClassName("currency-layout");
+        currencyLayout.setSizeFull();
+
+        updateButton = new Button("Обновить");
+        updateButton.setClassName("currency-button");
+
+        updateButton.addClickListener(e -> {
+            update();
+            view.updateTime();
+        });
+        verticalLayout = new VerticalLayout();
+        verticalLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+        verticalLayout.setSizeFull();
+
+        getContent().add(verticalLayout);
+
         update();
+
+        LOGGER.debug("Окончание создания CurrencyComponent");
+    }
+
+    private void setStyle() {
+        errorLabel.getStyle().set("font-size", "18pt");
+
+        LOGGER.debug("Создание CurrencyComponent");
         getContent().setClassName("my-currency");
 
-        Label currencyLabel = new Label("Курсы валют");
         currencyLabel.setClassName("currency-title");
 
         usdLabel.getStyle().set("margin-top", "5%");
@@ -39,66 +91,48 @@ public class CurrencyComponent extends Composite<Div> {
         eurLabel.getStyle().set("margin-top", "1%");
         eurDiff.getStyle().set("margin-top", "1%");
 
-
-        VerticalLayout mainValues = new VerticalLayout(usdLabel, eurLabel);
-        mainValues.setWidth("80%");
-        mainValues.getStyle().set("padding-left", "8%");
-
-        VerticalLayout icons = new VerticalLayout(usdIconDiff, eurIconDiff);
         icons.getStyle().set("margin-left", "0%");
         icons.getStyle().set("padding-right", "0%");
         icons.getStyle().set("padding-top", "3%");
         icons.getStyle().set("padding-bottom", "3%");
-
         icons.setWidth("14%");
         icons.setMargin(false);
-
-        VerticalLayout diffValues = new VerticalLayout(usdDiff, eurDiff);
-        diffValues.getStyle().set("margin-top", "1%");
-        diffValues.getStyle().set("margin-left", "0%");
-        diffValues.getStyle().set("padding-left", "0%");
-        diffValues.setWidth("35%");
-
-        HorizontalLayout currencyLayout = new HorizontalLayout(mainValues, icons,diffValues);
-        currencyLayout.setClassName("currency-layout");
-        currencyLayout.setSizeFull();
-
-        Button updateButton = new Button("Обновить");
-        updateButton.setClassName("currency-button");
-
-        updateButton.addClickListener(e -> {
-            update();
-            view.updateTime();
-        });
-        VerticalLayout verticalLayout = new VerticalLayout(currencyLabel,
-                currencyLayout, updateButton);
-        verticalLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        verticalLayout.setSizeFull();
-
-        getContent().add(verticalLayout);
     }
 
     private void update() {
+        try {
+            Currency currency = CurrencyService.getCurrency();
 
-        Currency currency = CurrencyService.getCurrency();
+            float usdDiffF = currency.getUsdDiff();
+            float eurDiffF = currency.getEurDiff();
 
-        float usdDiffF = currency.getUsdDiff();
-        float eurDiffF = currency.getEurDiff();
+            icons.removeAll();
+            usdIconDiff = getIcon(usdDiffF);
+            eurIconDiff = getIcon(eurDiffF);
+            icons.add(usdIconDiff, eurIconDiff);
 
-        usdIconDiff = getIcon(usdDiffF);
-        eurIconDiff = getIcon(eurDiffF);
+            usdDiff.setText(convertWithSign(usdDiffF));
+            eurDiff.setText(convertWithSign(eurDiffF));
 
-        usdDiff.setText(convertWithSign(usdDiffF));
-        eurDiff.setText(convertWithSign(eurDiffF));
+            usdDiff.getStyle().set("color", getColor(usdDiffF));
+            eurDiff.getStyle().set("color", getColor(eurDiffF));
 
-        usdDiff.getStyle().set("color", getColor(usdDiffF));
-        eurDiff.getStyle().set("color", getColor(eurDiffF));
+            usdIconDiff.setColor(getColor(usdDiffF));
+            eurIconDiff.setColor(getColor(eurDiffF));
 
-        usdIconDiff.setColor(getColor(usdDiffF));
-        eurIconDiff.setColor(getColor(eurDiffF));
+            usdLabel.setText("USD/RUB: " + currency.getUsd());
+            eurLabel.setText("EUR/RUB: " + currency.getEur());
 
-        usdLabel.setText("USD/RUB: " + currency.getUsd());
-        eurLabel.setText("EUR/RUB: " + currency.getEur());
+            verticalLayout.removeAll();
+            verticalLayout.add(currencyLabel, currencyLayout, updateButton);
+        } catch (UserException e) {
+            CustomNotification notification = new CustomNotification(e.getMessage());
+            verticalLayout.remove(currencyLabel, currencyLayout, updateButton);
+            verticalLayout.add(currencyLabel, errorLabel, updateButton);
+
+            notification.show();
+            LOGGER.info(e.getMessage());
+        }
     }
 
     private String convertWithSign(float f) {
