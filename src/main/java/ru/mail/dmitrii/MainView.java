@@ -45,9 +45,18 @@ public class MainView extends VerticalLayout {
         Date now = new Date();
         stateInfo = new Label("Информация по состоянию на " + dateFormat.format(now));
 
-        horizontalLayout.setSizeFull();
+        //horizontalLayout.setSizeFull();
+        horizontalLayout.setHeight("90%");
 
         HorizontalLayout timeIP = new HorizontalLayout(stateInfo, ipLabel);
+        timeIP.getStyle().set("margin-top", "25%");
+        timeIP.getStyle().set("font-size", "16pt");
+        timeIP.setWidth("100%");
+        //timeIP.setSizeFull();
+        stateInfo.setWidth("80%");
+        //stateInfo.setSizeFull();
+        //ipLabel.setSizeFull();
+
 
         add(horizontalLayout, timeIP);
         setSizeFull();
