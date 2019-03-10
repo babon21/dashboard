@@ -1,4 +1,4 @@
-package ru.mail.dmitrii.entity;
+package ru.eltex.app.dashboard.entity;
 
 /**
  * Класс для описания значений валюты

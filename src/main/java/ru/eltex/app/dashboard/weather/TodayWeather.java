@@ -1,4 +1,4 @@
-package ru.mail.dmitrii.frontend;
+package ru.eltex.app.dashboard.frontend;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.html.Div;
@@ -6,9 +6,9 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import ru.mail.dmitrii.entity.Weather;
+import ru.eltex.app.dashboard.entity.Weather;
 
-import static ru.mail.dmitrii.util.WeatherHelper.DEGREE;
+import static ru.eltex.app.dashboard.util.WeatherHelper.DEGREE;
 
 public class TodayWeather extends Composite<Div> {
 

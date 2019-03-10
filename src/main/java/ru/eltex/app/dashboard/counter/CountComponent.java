@@ -1,4 +1,4 @@
-package ru.mail.dmitrii.frontend;
+package ru.eltex.app.dashboard.frontend;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.html.Div;
@@ -6,9 +6,9 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.apache.log4j.Logger;
-import ru.mail.dmitrii.entity.CustomNotification;
-import ru.mail.dmitrii.exception.UserException;
-import ru.mail.dmitrii.service.CountService;
+import ru.eltex.app.dashboard.entity.CustomNotification;
+import ru.eltex.app.dashboard.exception.UserException;
+import ru.eltex.app.dashboard.service.CountService;
 
 
 public class CountComponent extends Composite<Div> {

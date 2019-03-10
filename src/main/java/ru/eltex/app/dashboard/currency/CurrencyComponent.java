@@ -1,4 +1,4 @@
-package ru.mail.dmitrii.frontend;
+package ru.eltex.app.dashboard.frontend;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
@@ -6,16 +6,15 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.apache.log4j.Logger;
-import ru.mail.dmitrii.MainView;
-import ru.mail.dmitrii.entity.Currency;
-import ru.mail.dmitrii.entity.CustomNotification;
-import ru.mail.dmitrii.exception.UserException;
-import ru.mail.dmitrii.service.CurrencyService;
+import ru.eltex.app.dashboard.MainView;
+import ru.eltex.app.dashboard.entity.Currency;
+import ru.eltex.app.dashboard.entity.CustomNotification;
+import ru.eltex.app.dashboard.service.CurrencyService;
+import ru.eltex.app.dashboard.exception.UserException;
 
 public class CurrencyComponent extends Composite<Div> {
 

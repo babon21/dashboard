@@ -1,4 +1,4 @@
-package ru.mail.dmitrii.entity;
+package ru.eltex.app.dashboard.entity;
 
 import com.vaadin.flow.component.notification.Notification;
 

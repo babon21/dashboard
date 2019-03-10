@@ -1,18 +1,22 @@
-package ru.mail.dmitrii.service;
+package ru.eltex.app.dashboard.counter;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import org.apache.log4j.Logger;
 import org.bson.Document;
-import ru.mail.dmitrii.exception.UserException;
+import ru.eltex.app.dashboard.exception.UserException;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.inc;
 
 public class CountService {
 
+    private static final Logger logger = Logger.getLogger(CountService.class);
+
 
     public static int getCount() throws UserException {
+        logger.info("Получение счетчика посещений");
         try {
             MongoClient mongo = new MongoClient( "localhost" , 27017 );
             MongoDatabase database = mongo.getDatabase("dash-count");
@@ -33,7 +37,8 @@ public class CountService {
 
             return ++cnt;
         } catch (Exception e) {
-            throw new UserException("Не удалось подключиться к серверу БД");
+            logger.info("Ошибка получения счетчика посещений");
+            throw new UserException("Ошибка получения счетчика посещений");
         }
     }
 }
