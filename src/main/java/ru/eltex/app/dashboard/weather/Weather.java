@@ -1,4 +1,4 @@
-package ru.eltex.app.dashboard.entity;
+package ru.eltex.app.dashboard.weather;
 
 public class Weather {
 

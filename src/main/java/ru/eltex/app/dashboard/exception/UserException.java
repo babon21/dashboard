@@ -1,4 +1,4 @@
-package ru.mail.dmitrii.exception;
+package ru.eltex.app.dashboard.exception;
 
 public class UserException extends Exception {
     private String message;

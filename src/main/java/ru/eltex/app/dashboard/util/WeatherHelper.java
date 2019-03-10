@@ -1,19 +1,19 @@
-package ru.mail.dmitrii.util;
+package ru.eltex.app.dashboard.util;
 
 import com.jayway.jsonpath.JsonPath;
-import ru.mail.dmitrii.entity.Weather;
+import ru.eltex.app.dashboard.weather.Weather;
 
 public class WeatherHelper {
     public final static String DEGREE = "\u00b0";
 
-    public static String convertWind(String wind) {
+    private static String convertWind(String wind) {
         double windValue = Double.parseDouble(wind);
         windValue *= 0.28;
         windValue = (double) Math.round(windValue * 10) / 10;
         return String.valueOf(windValue);
     }
 
-    public static String convertPressure(String pressure) {
+    private static String convertPressure(String pressure) {
         double pressureValue = Double.parseDouble(pressure);
 
         //перевод из милли бар в мм рт.ст.

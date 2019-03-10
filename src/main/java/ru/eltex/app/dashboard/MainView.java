@@ -1,4 +1,4 @@
-package ru.mail.dmitrii;
+package ru.eltex.app.dashboard;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -8,9 +8,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
-import ru.mail.dmitrii.frontend.CountComponent;
-import ru.mail.dmitrii.frontend.CurrencyComponent;
-import ru.mail.dmitrii.frontend.WeatherComponent;
+import ru.eltex.app.dashboard.counter.CountComponent;
+import ru.eltex.app.dashboard.currency.CurrencyComponent;
+import ru.eltex.app.dashboard.weather.WeatherComponent;
 
 
 import java.text.DateFormat;
@@ -45,18 +45,13 @@ public class MainView extends VerticalLayout {
         Date now = new Date();
         stateInfo = new Label("Информация по состоянию на " + dateFormat.format(now));
 
-        //horizontalLayout.setSizeFull();
         horizontalLayout.setHeight("90%");
 
         HorizontalLayout timeIP = new HorizontalLayout(stateInfo, ipLabel);
         timeIP.getStyle().set("margin-top", "25%");
         timeIP.getStyle().set("font-size", "16pt");
         timeIP.setWidth("100%");
-        //timeIP.setSizeFull();
         stateInfo.setWidth("80%");
-        //stateInfo.setSizeFull();
-        //ipLabel.setSizeFull();
-
 
         add(horizontalLayout, timeIP);
         setSizeFull();

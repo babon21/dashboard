@@ -10,12 +10,12 @@ import ru.eltex.app.dashboard.exception.UserException;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.inc;
 
-public class CountService {
+public class MongoCountService implements CountService {
 
-    private static final Logger logger = Logger.getLogger(CountService.class);
+    private static final Logger logger = Logger.getLogger(MongoCountService.class);
 
 
-    public static int getCount() throws UserException {
+    public int getCount() throws UserException {
         logger.info("Получение счетчика посещений");
         try {
             MongoClient mongo = new MongoClient( "localhost" , 27017 );

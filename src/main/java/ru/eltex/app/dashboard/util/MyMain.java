@@ -1,4 +1,4 @@
-package ru.mail.dmitrii.util;
+package ru.eltex.app.dashboard.util;
 
 
 public class MyMain {

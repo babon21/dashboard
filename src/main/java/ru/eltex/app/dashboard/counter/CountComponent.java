@@ -1,4 +1,4 @@
-package ru.eltex.app.dashboard.frontend;
+package ru.eltex.app.dashboard.counter;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.html.Div;
@@ -6,14 +6,15 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.apache.log4j.Logger;
-import ru.eltex.app.dashboard.entity.CustomNotification;
+import ru.eltex.app.dashboard.custom.CustomNotification;
 import ru.eltex.app.dashboard.exception.UserException;
-import ru.eltex.app.dashboard.service.CountService;
 
 
 public class CountComponent extends Composite<Div> {
 
     private static final Logger LOGGER = Logger.getLogger(CountComponent.class);
+
+    private CountService countService = new MongoCountService();
 
     public CountComponent() {
         getContent().setClassName("my-count");
@@ -22,7 +23,7 @@ public class CountComponent extends Composite<Div> {
         title.setClassName("count-title");
 
         try {
-            int count = CountService.getCount();
+            int count = countService.getCount();
 
             Label countLabel = new Label(  "" + count);
             VerticalLayout countLayout = new VerticalLayout(countLabel);

@@ -1,4 +1,4 @@
-package ru.eltex.app.dashboard.frontend;
+package ru.eltex.app.dashboard.weather;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.html.Div;
@@ -6,7 +6,6 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import ru.eltex.app.dashboard.entity.Weather;
 import ru.eltex.app.dashboard.util.WeatherHelper;
 
 public class TomorrowWeather extends Composite<Div> {

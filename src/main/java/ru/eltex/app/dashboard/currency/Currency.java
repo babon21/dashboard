@@ -1,13 +1,10 @@
-package ru.eltex.app.dashboard.entity;
+package ru.eltex.app.dashboard.currency;
 
 /**
  * Класс для описания значений валюты
  *
  * */
 public class Currency {
-
-    /**  Название валюты*/
-    private String name;
 
     /** Текущее значение валюты по курсу Центробанка РФ */
     private String usd;
@@ -34,11 +31,6 @@ public class Currency {
         this.eurDiff = eurDiff;
     }
 
-    /** Значение всех полей, когда сервер информера недоступен*/
-    private String sign;
-
-
-
     public String getUsd() {
         return usd;
     }
@@ -55,12 +47,5 @@ public class Currency {
         this.eur = eur;
     }
 
-    public String getSign() {
-        return sign;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
 }
 

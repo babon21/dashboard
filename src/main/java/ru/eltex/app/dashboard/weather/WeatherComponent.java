@@ -1,4 +1,4 @@
-package ru.eltex.app.dashboard.frontend;
+package ru.eltex.app.dashboard.weather;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
@@ -10,9 +10,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.apache.log4j.Logger;
 import ru.eltex.app.dashboard.MainView;
-import ru.eltex.app.dashboard.entity.CustomNotification;
-import ru.eltex.app.dashboard.entity.Weather;
-import ru.eltex.app.dashboard.service.WeatherService;
+import ru.eltex.app.dashboard.custom.CustomNotification;
 import ru.eltex.app.dashboard.util.CitiesHelper;
 import ru.eltex.app.dashboard.exception.UserException;
 
@@ -24,11 +22,13 @@ public class WeatherComponent extends Composite<Div> {
     private Label title;
 
 
-    private static final Logger LOGGER = Logger.getLogger(WeatherComponent.class);
+    private static final Logger logger = Logger.getLogger(WeatherComponent.class);
 
     /**
      * Лист наименований городов
      */
+    private WeatherService weatherService = new WWOWeatherService();
+
     private final ArrayList<String> places = new ArrayList<>();
 
     private final ComboBox<String> citiesBox = new ComboBox<>();
@@ -79,21 +79,19 @@ public class WeatherComponent extends Composite<Div> {
 
     private void update_info() {
         try {
-            Weather weather = WeatherService.getWeatherData(CitiesHelper.getCity(citiesBox.getValue()));
+            Weather weather = weatherService.getWeatherData(CitiesHelper.getCity(citiesBox.getValue()));
 
-            LOGGER.info("Начало обновления сегодняшней погоды");
+            logger.info("Обновление сегодняшней погоды");
             todayWeather.update(weather);
-            LOGGER.info("Конец обновления сегодняшней погоды");
 
-            LOGGER.info("Начало обновления завтрашней погоды");
+            logger.info("Обновление завтрашней погоды");
             tomorrowWeather.update(weather);
-            LOGGER.info("Конец обновления завтрашней погоды");
 
             verticalLayout.removeAll();
             weatherTable.add(todayWeather, tomorrowWeather);
             verticalLayout.add(title, citiesBox, weatherTable, update);
         } catch (UserException e) {
-            LOGGER.info(e.getMessage());
+            logger.info(e.getMessage());
             verticalLayout.removeAll();
             verticalLayout.add(title, errorLabel, update);
             verticalLayout.setHorizontalComponentAlignment(FlexComponent.Alignment.CENTER, errorLabel);

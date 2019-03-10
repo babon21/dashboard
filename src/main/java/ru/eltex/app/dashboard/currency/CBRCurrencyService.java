@@ -5,13 +5,13 @@ import org.apache.log4j.Logger;
 import ru.eltex.app.dashboard.exception.UserException;
 import ru.eltex.app.dashboard.util.JsonHelper;
 
-public class CurrencyService {
+public class CBRCurrencyService implements CurrencyService {
 
     private static final String URL_C = "https://www.cbr-xml-daily.ru/daily_json.js";
-    private static final Logger logger = Logger.getLogger(CurrencyService.class);
+    private static final Logger logger = Logger.getLogger(CBRCurrencyService.class);
 
 
-    public static Currency getCurrency() throws UserException {
+    public Currency getCurrency() throws UserException {
         logger.info("Получение курса валют");
         Currency currency = new Currency();
         try {
@@ -34,7 +34,6 @@ public class CurrencyService {
             currency.setEur(eur);
             currency.setEurDiff(eurDiff);
         } catch (Exception e) {
-            logger.info("Ошибка запроса валюты");
             throw new UserException("Ошибка запроса валюты");
         }
         return currency;

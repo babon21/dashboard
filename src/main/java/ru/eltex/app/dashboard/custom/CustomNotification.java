@@ -1,10 +1,9 @@
-package ru.eltex.app.dashboard.entity;
+package ru.eltex.app.dashboard.custom;
 
 import com.vaadin.flow.component.notification.Notification;
 
 public class CustomNotification {
     private Notification notification;
-
 
     public CustomNotification(String message) {
         notification = new Notification();

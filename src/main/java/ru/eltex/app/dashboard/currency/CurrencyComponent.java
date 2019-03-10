@@ -1,4 +1,4 @@
-package ru.eltex.app.dashboard.frontend;
+package ru.eltex.app.dashboard.currency;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
@@ -11,9 +11,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.apache.log4j.Logger;
 import ru.eltex.app.dashboard.MainView;
-import ru.eltex.app.dashboard.entity.Currency;
-import ru.eltex.app.dashboard.entity.CustomNotification;
-import ru.eltex.app.dashboard.service.CurrencyService;
+import ru.eltex.app.dashboard.custom.CustomNotification;
 import ru.eltex.app.dashboard.exception.UserException;
 
 public class CurrencyComponent extends Composite<Div> {
@@ -33,6 +31,8 @@ public class CurrencyComponent extends Composite<Div> {
     private Label currencyLabel;
     private Button updateButton;
     private VerticalLayout icons;
+
+    private CurrencyService currencyService = new CBRCurrencyService();
 
     private static final Logger LOGGER = Logger.getLogger(CurrencyComponent.class);
 
@@ -100,7 +100,7 @@ public class CurrencyComponent extends Composite<Div> {
 
     private void update() {
         try {
-            Currency currency = CurrencyService.getCurrency();
+            Currency currency = currencyService.getCurrency();
 
             float usdDiffF = currency.getUsdDiff();
             float eurDiffF = currency.getEurDiff();

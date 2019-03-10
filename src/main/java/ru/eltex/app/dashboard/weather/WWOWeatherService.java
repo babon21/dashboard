@@ -10,11 +10,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class WWOWeatherService {
+public class WWOWeatherService implements WeatherService {
     private static final String key = "94ec3a6e682444b480f154701192602";
-    private static final Logger logger = Logger.getLogger(WeatherService.class);
+    private static final Logger logger = Logger.getLogger(WWOWeatherService.class);
 
-    public static Weather getWeatherData(String city) throws UserException {
+    public Weather getWeatherData(String city) throws UserException {
         URL url;
         StringBuffer response = new StringBuffer();
         logger.info("Получение погоды города " + city);
@@ -38,7 +38,6 @@ public class WWOWeatherService {
             rd.close();
 
         } catch (Exception e) {
-            logger.info("Ошибка запроса погоды");
             throw new UserException("Ошибка запроса погоды");
         }
 
