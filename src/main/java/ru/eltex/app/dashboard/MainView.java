@@ -22,7 +22,6 @@ import java.util.Date;
  */
 @HtmlImport("frontend://styles/shared-styles.html")
 @Route("")
-@PWA(name = "Project Base for Vaadin Flow", shortName = "Project Base")
 public class MainView extends VerticalLayout {
 
     private Label stateInfo;

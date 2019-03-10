@@ -12,7 +12,7 @@ import ru.eltex.app.dashboard.exception.UserException;
 
 public class CountComponent extends Composite<Div> {
 
-    private static final Logger LOGGER = Logger.getLogger(CountComponent.class);
+    private static final Logger logger = Logger.getLogger(CountComponent.class);
 
     private CountService countService = new MongoCountService();
 
@@ -38,7 +38,7 @@ public class CountComponent extends Composite<Div> {
         } catch (UserException e) {
             CustomNotification notification = new CustomNotification(e.getMessage());
             notification.show();
-            LOGGER.info(e.getMessage());
+            logger.error(e.getMessage());
         }
 
     }

@@ -37,7 +37,6 @@ public class MongoCountService implements CountService {
 
             return ++cnt;
         } catch (Exception e) {
-            logger.info("Ошибка получения счетчика посещений");
             throw new UserException("Ошибка получения счетчика посещений");
         }
     }

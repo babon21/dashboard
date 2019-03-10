@@ -91,7 +91,7 @@ public class WeatherComponent extends Composite<Div> {
             weatherTable.add(todayWeather, tomorrowWeather);
             verticalLayout.add(title, citiesBox, weatherTable, update);
         } catch (UserException e) {
-            logger.info(e.getMessage());
+            logger.error(e.getMessage());
             verticalLayout.removeAll();
             verticalLayout.add(title, errorLabel, update);
             verticalLayout.setHorizontalComponentAlignment(FlexComponent.Alignment.CENTER, errorLabel);

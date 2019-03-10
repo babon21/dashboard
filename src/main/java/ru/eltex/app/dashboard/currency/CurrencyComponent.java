@@ -130,7 +130,7 @@ public class CurrencyComponent extends Composite<Div> {
             verticalLayout.add(currencyLabel, errorLabel, updateButton);
 
             notification.show();
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 
