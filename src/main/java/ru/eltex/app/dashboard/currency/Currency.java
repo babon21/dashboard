@@ -1,19 +1,23 @@
 package ru.eltex.app.dashboard.currency;
 
 /**
- * Класс для описания значений валюты
- *
- * */
+ * Класс, содержащий информацию о курсе валют
+ * @author darzhain
+ */
 public class Currency {
 
-    /** Текущее значение валюты по курсу Центробанка РФ */
+    /** Текущее значение доллара по курсу Центробанка РФ */
     private String usd;
 
+    /** Текущее значение евро по курсу Центробанка РФ */
     private String eur;
 
+    /** Разница доллара, по сравнению с предыдущим курсом */
     private float usdDiff;
 
+    /** Разница евро, по сравнению с предыдущим курсом */
     private float eurDiff;
+
 
     public float getUsdDiff() {
         return usdDiff;
@@ -46,6 +50,5 @@ public class Currency {
     public void setEur(String eur) {
         this.eur = eur;
     }
-
 }
 

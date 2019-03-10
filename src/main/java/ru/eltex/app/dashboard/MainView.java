@@ -18,7 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * The main view contains a button a click listener.
+ * Основной класс(layout), содержащий все остальные пользовательские компоненты
+ * @author darzhain
  */
 @HtmlImport("frontend://styles/shared-styles.html")
 @Route("")

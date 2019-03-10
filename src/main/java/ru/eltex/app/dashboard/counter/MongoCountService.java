@@ -10,11 +10,26 @@ import ru.eltex.app.dashboard.exception.UserException;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.inc;
 
+/**
+ * Учет числа посещений с помощью MongoDB <br>
+ * Порт, адрес, и БД сервера стандартные <br>
+ *
+ * <p>
+ * Формат документа<br>
+ * <code>{ id : integer, count : integer}</code>
+ * </p>
+ *
+ * @author darhzain
+ */
 public class MongoCountService implements CountService {
 
     private static final Logger logger = Logger.getLogger(MongoCountService.class);
 
-
+    /**
+     * Получение значение счетчика посещений
+     * @return значение счетчика
+     * @throws UserException
+     */
     public int getCount() throws UserException {
         logger.info("Получение счетчика посещений");
         try {

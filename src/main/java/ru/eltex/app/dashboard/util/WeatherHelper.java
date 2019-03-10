@@ -3,9 +3,18 @@ package ru.eltex.app.dashboard.util;
 import com.jayway.jsonpath.JsonPath;
 import ru.eltex.app.dashboard.weather.Weather;
 
+/**
+ * Основной класс(layout), содержащий все остальные пользовательские компоненты
+ * @author darzhain
+ */
 public class WeatherHelper {
     public final static String DEGREE = "\u00b0";
 
+    /**
+     * Преобразование ветра из км/ч в м/с
+     * @param wind
+     * @return ветер в м/с
+     */
     private static String convertWind(String wind) {
         double windValue = Double.parseDouble(wind);
         windValue *= 0.28;
@@ -13,6 +22,11 @@ public class WeatherHelper {
         return String.valueOf(windValue);
     }
 
+    /**
+     * Преобразование давления из милли баров в мм рт.ст.
+     * @param pressure
+     * @return давление в мм рт.ст.
+     */
     private static String convertPressure(String pressure) {
         double pressureValue = Double.parseDouble(pressure);
 
@@ -23,6 +37,11 @@ public class WeatherHelper {
         return String.valueOf((int) Math.round(pressureValue));
     }
 
+    /**
+     * Получение объекта Weather, парсинг json
+     * @param json Строка, в формате json, содержащая информацию о погоде
+     * @return Объект, содержащий информацию о погоде
+     */
     public static Weather getWeather(String json) {
         Weather weather = new Weather();
 

@@ -5,12 +5,28 @@ import org.apache.log4j.Logger;
 import ru.eltex.app.dashboard.exception.UserException;
 import ru.eltex.app.dashboard.util.JsonHelper;
 
+
+/**
+ * Получение и парсинг курса валют с сайта Центрального Банка России
+ *
+ * @author darzhain
+ */
 public class CBRCurrencyService implements CurrencyService {
 
-    private static final String URL_C = "https://www.cbr-xml-daily.ru/daily_json.js";
+    /**
+     * URL запроса к API сервиса, предоставляющий данные о курсе валют
+     * в формате JSON
+     **/
+    private final String URL_C = "https://www.cbr-xml-daily.ru/daily_json.js";
+
     private static final Logger logger = Logger.getLogger(CBRCurrencyService.class);
 
 
+    /**
+     * Получить данные о курсе валют
+     * @return Информацию о курсе валют
+     * @throws UserException
+     */
     public Currency getCurrency() throws UserException {
         logger.info("Получение курса валют");
         Currency currency = new Currency();
@@ -23,6 +39,7 @@ public class CBRCurrencyService implements CurrencyService {
             String eur = JsonPath.read(jsonCbr, "$.Valute.EUR.Value").toString();
             String eurPrev = JsonPath.read(jsonCbr, "$.Valute.EUR.Previous").toString();
 
+            //округление до 3 знака после запятой
             float usdDiff = Float.parseFloat(usd) - Float.parseFloat(usdPrev);
             usdDiff = (float) Math.round(usdDiff * 1000) / 1000;
             float eurDiff = Float.parseFloat(eur) - Float.parseFloat(eurPrev);

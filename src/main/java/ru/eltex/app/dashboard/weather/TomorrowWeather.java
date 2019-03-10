@@ -8,15 +8,28 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import ru.eltex.app.dashboard.util.WeatherHelper;
 
+/**
+ * UI компонент, отвещающий за отображение прогноза погоды на следующий день
+ * @author darhzain
+ */
 public class TomorrowWeather extends Composite<Div> {
 
+    /** Температура после обеда */
     private Label afternoonTemp = new Label();
+
+    /** Описание погоды после обеда */
     private Label afternoonDesc = new Label();
 
+    /** Температура вечером */
     private Label eveningTemp = new Label();
+
+    /** Описание погоды вечером */
     private Label eveningDesc = new Label();
 
+    /** Минимальная температура */
     private Label min = new Label();
+
+    /** Максимальная температура */
     private Label max = new Label();
 
     public TomorrowWeather() {
@@ -42,7 +55,6 @@ public class TomorrowWeather extends Composite<Div> {
         eveningLayout.setAlignItems(FlexComponent.Alignment.CENTER);
         eveningLayout.setClassName("tomorrow-layout");
 
-
         HorizontalLayout horizontalLayout = new HorizontalLayout(afternoonLayout, eveningLayout);
 
         horizontalLayout.setClassName("tomorrow-layout");
@@ -64,6 +76,10 @@ public class TomorrowWeather extends Composite<Div> {
 
     }
 
+    /**
+     * Обновление UI элементов новой информацией о погоде
+     * @param weather Объект, содержащий информацию о погоде
+     */
     public void update(Weather weather) {
         afternoonTemp.setText(weather.getAfternoon() + WeatherHelper.DEGREE + "C");
         afternoonDesc.setText(weather.getAfternoonDesc());

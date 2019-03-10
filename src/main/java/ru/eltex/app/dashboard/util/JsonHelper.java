@@ -5,7 +5,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
+/**
+ * Класс помощник для работы с запросами JSON
+ * @author darzhain
+ */
 public class JsonHelper {
 
     public static String jsonToString(String url) throws Exception {

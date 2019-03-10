@@ -9,19 +9,31 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import static ru.eltex.app.dashboard.util.WeatherHelper.DEGREE;
 
+/**
+ * UI компонент, отвещающий за отображение прогноза погоды на сегодняшний день
+ * @author darhzain
+ */
 public class TodayWeather extends Composite<Div> {
 
+    /** Заголовк компонента */
     private Label title;
 
+    /** Текущая температура */
     private Label curC = new Label();
+
+    /** Температура ощущается как */
     private Label feelsLikeC = new Label();
+
     private Label wind = new Label();
+
     private Label humidity = new Label();
+
     private Label pressure = new Label();
+
     private Label desc = new Label();
 
+    /** Основной Layout компонента  */
     private VerticalLayout now;
-
 
     public TodayWeather() {
         title = new Label("Сейчас");
@@ -52,6 +64,10 @@ public class TodayWeather extends Composite<Div> {
         getContent().add(content);
     }
 
+    /**
+     * Обновление UI элементов новой информацией о погоде
+     * @param weather Объект, содержащий информацию о погоде
+     */
     public void update(Weather weather) {
         curC.setText(weather.getCurC() + DEGREE + "C");
         desc.setText(weather.getDesc());

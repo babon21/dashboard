@@ -10,17 +10,35 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+
+/**
+ * Сервис получения прогноза погоды с worldweatheronline.com
+ * @author darzhain
+ */
 public class WWOWeatherService implements WeatherService {
+
+    /** Уникальный ключ, предоставляемый при регистрации на WWO
+     *  Необходим для запроса
+     * */
     private static final String key = "94ec3a6e682444b480f154701192602";
+
+    private static final String baseUrl = "http://api.worldweatheronline.com/premium/v1/weather.ashx?";
+
     private static final Logger logger = Logger.getLogger(WWOWeatherService.class);
 
+    /**
+     * Получение прогноза погоды заданного города city
+     * @param city Город, на английском
+     * @return Информация о прогнозе погоды
+     * @throws UserException
+     */
     public Weather getWeatherData(String city) throws UserException {
         URL url;
         StringBuffer response = new StringBuffer();
         logger.info("Получение погоды города " + city);
         try {
-            url = new URL("http://api.worldweatheronline.com/premium/v1/weather.ashx?" +
-                    "key=" + key +"&q=" + city + "&num_of_days=2&tp=6&format=json&mca=no&lang=ru");
+            url = new URL( baseUrl + "key=" + key +"&q=" + city +
+                    "&num_of_days=2&tp=6&format=json&mca=no&lang=ru");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             InputStream is;
             int status = connection.getResponseCode();

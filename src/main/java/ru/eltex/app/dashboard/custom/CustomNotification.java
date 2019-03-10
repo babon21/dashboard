@@ -2,6 +2,10 @@ package ru.eltex.app.dashboard.custom;
 
 import com.vaadin.flow.component.notification.Notification;
 
+/**
+ * Пользовательский Notification
+ * @author darhzain
+ */
 public class CustomNotification {
     private Notification notification;
 

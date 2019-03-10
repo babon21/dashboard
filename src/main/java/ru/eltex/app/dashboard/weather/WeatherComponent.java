@@ -16,29 +16,44 @@ import ru.eltex.app.dashboard.exception.UserException;
 
 import java.util.ArrayList;
 
-
+/**
+ * UI компонент, отвещающий за отображение прогноза погоды
+ * @author darhzain
+ */
 public class WeatherComponent extends Composite<Div> {
 
-    private Label title;
 
+    /** Заголовок компонента */
+    private Label title;
 
     private static final Logger logger = Logger.getLogger(WeatherComponent.class);
 
-    /**
-     * Лист наименований городов
-     */
-    private WeatherService weatherService = new WWOWeatherService();
+    /** Сервис получения прогноза погоды */
+    private static WeatherService weatherService = new WWOWeatherService();
 
+    /** Список наименований городов */
     private final ArrayList<String> places = new ArrayList<>();
 
     private final ComboBox<String> citiesBox = new ComboBox<>();
 
+    /** UI компонент, отображающий информацию о погоде на завтра */
     private TodayWeather todayWeather = new TodayWeather();
+
+    /** UI компонент, отображающий информацию о погоде на сегодня */
     private TomorrowWeather tomorrowWeather = new TomorrowWeather();
+
+    /** Layout, содержащий информацию о погоде */
     private HorizontalLayout weatherTable = new HorizontalLayout();
+
+    /** Основной Layout компонента */
     private VerticalLayout verticalLayout = new VerticalLayout();
+
     private Button update;
 
+    /** Надпись о недоступности сервиса.
+     *  Выводится в случае отсутствия интернета,
+     *  или недоступности удаленного сервиса
+     * */
     private Label errorLabel = new Label("Сервис недоступен");
 
     public WeatherComponent() {}
@@ -77,6 +92,12 @@ public class WeatherComponent extends Composite<Div> {
         getContent().add(verticalLayout);
     }
 
+    /**
+     * Обновление информации о погоде,
+     * вызывается по кнопке Обновить и в конструкторе.
+     * Выводит соответствующую информацию в компонент, в случае
+     * недоступности удаленного сервиса, выводит уведомление
+     */
     private void update_info() {
         try {
             Weather weather = weatherService.getWeatherData(CitiesHelper.getCity(citiesBox.getValue()));

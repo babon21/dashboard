@@ -10,11 +10,17 @@ import ru.eltex.app.dashboard.custom.CustomNotification;
 import ru.eltex.app.dashboard.exception.UserException;
 
 
+/**
+ * UI компонент, отвещающий за отображение счетчика посещений страницы
+ * @author darhzain
+ */
 public class CountComponent extends Composite<Div> {
 
     private static final Logger logger = Logger.getLogger(CountComponent.class);
 
-    private CountService countService = new MongoCountService();
+    /** Сервис получения счетчика посещений */
+    private static CountService countService = new MongoCountService();
+
 
     public CountComponent() {
         getContent().setClassName("my-count");

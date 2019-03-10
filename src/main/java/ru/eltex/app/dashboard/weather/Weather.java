@@ -1,41 +1,48 @@
 package ru.eltex.app.dashboard.weather;
 
+/**
+ * Класс, содержащий информацию о погоде
+ * @author darzhain
+ */
 public class Weather {
 
-    /* Текущая погода
-    *  - текущая температура
-    *  - ощущается как
-    *  - ветер м/c
-    *  - влажность (%)
-    *  - давление мм рт.ст.
-    * */
+    /** Текущая температура */
     private String curC;
 
+    /** Температура ощущается как */
     private String feelsLikeC;
 
+    /** Текущий ветер м/c */
     private String wind;
 
+    /** Текущая влажность (%) */
     private String humidity;
 
+    /** Текущее давление мм рт.ст. */
     private String pressure;
 
+    /** Текущее описание погоды*/
     private String desc;
 
 
-    /* Погода на завтра
-    *
-    * */
+    /** Минимальная температура на следующий день */
     private String minC;
 
+    /** Максимальная температура на следующий день */
     private String maxC;
 
+    /** Температура на следующий день после обеда */
     private String afternoon;
 
+    /** Описание погоды на следующий день после обеда */
     private String afternoonDesc;
 
+    /** Температура на следующий день вечером */
     private String evening;
 
+    /** Описание погоды на следующий день на вечер */
     private String eveningDesc;
+
 
     public String getAfternoonDesc() {
         return afternoonDesc;
@@ -131,13 +138,5 @@ public class Weather {
 
     public void setPressure(String pressure) {
         this.pressure = pressure;
-    }
-
-    @Override
-    public String toString() {
-        return "Current temp: " + curC + "\nFeels like C: " + feelsLikeC +
-                "\nCurrent wind: " + wind + "\nHumidity: " + humidity +
-                "\nPressure: " + pressure +
-                "\nMin temp: " + maxC + "\nMin temp: " + minC + "\n";
     }
 }

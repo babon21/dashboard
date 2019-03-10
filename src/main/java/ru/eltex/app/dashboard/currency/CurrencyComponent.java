@@ -14,29 +14,58 @@ import ru.eltex.app.dashboard.MainView;
 import ru.eltex.app.dashboard.custom.CustomNotification;
 import ru.eltex.app.dashboard.exception.UserException;
 
+/**
+ * UI компонент, отвечающий за отображение текущего курса валют
+ * @author darhzain
+ */
 public class CurrencyComponent extends Composite<Div> {
 
     public CurrencyComponent() {}
 
+    /** Надпись для значения текущего курса доллара */
     private Label usdLabel = new Label();
+
+    /** Надпись для значения текущего курса евро */
     private Label eurLabel = new Label();
+
+    /** Надпись для значения изменения курса доллара */
     private Label usdDiff = new Label();
+
+    /** Надпись для значения изменения курса евро */
     private Label eurDiff = new Label();
 
+    /** Иконка для отображения изменения курса доллара */
     private Icon usdIconDiff = new Icon();
+
+    /** Иконка для отображения изменения курса евро */
     private Icon eurIconDiff = new Icon();
 
-    private HorizontalLayout currencyLayout;
+    /** Основной Layout компонента */
     private VerticalLayout verticalLayout;
-    private Label currencyLabel;
-    private Button updateButton;
+
+    /** Layout для курса валют */
+    private HorizontalLayout currencyLayout;
+
+    /** Layout для иконок */
     private VerticalLayout icons;
 
-    private CurrencyService currencyService = new CBRCurrencyService();
+    /** Заголовок компонента */
+    private Label currencyLabel;
+
+    /** Кнопка Обновить */
+    private Button updateButton;
+
+
+    /** Надпись о недоступности сервиса
+     *  Выводится в случае отсутствия интернета,
+     *  или недоступности удаленного сервиса
+     * */
+    private Label errorLabel = new Label("Сервис недоступен");
+
+    /** Сервис получения курса валют */
+    private static CurrencyService currencyService = new CBRCurrencyService();
 
     private static final Logger LOGGER = Logger.getLogger(CurrencyComponent.class);
-
-    private Label errorLabel = new Label("Сервис недоступен");
 
 
     public CurrencyComponent(MainView view) {
@@ -76,6 +105,9 @@ public class CurrencyComponent extends Composite<Div> {
         LOGGER.debug("Окончание создания CurrencyComponent");
     }
 
+    /**
+     * Установка стилей UI элементов
+     */
     private void setStyle() {
         errorLabel.getStyle().set("font-size", "18pt");
 
@@ -98,6 +130,10 @@ public class CurrencyComponent extends Composite<Div> {
         icons.setMargin(false);
     }
 
+    /**
+     * Обновление курса валют и отображение соответствующей информации.
+     * В случае недоступности удаленного сервиса выводит уведомление
+     */
     private void update() {
         try {
             Currency currency = currencyService.getCurrency();
@@ -134,10 +170,20 @@ public class CurrencyComponent extends Composite<Div> {
         }
     }
 
+    /**
+     * Преобразование в строку со знаком (+ или -)
+     * @param f значение курса валюты
+     * @return значение со знаком
+     */
     private String convertWithSign(float f) {
         return f > 0.0 ? "+ " + String.valueOf(f) : String.valueOf(f);
     }
 
+    /**
+     * Получить иконку курса валют, в зависимости от разницы валюты
+     * @param f значение разницы курса валют
+     * @return Объект Vaadin иконки
+     */
     private Icon getIcon(float f) {
         if (f > 0)
             return new Icon(VaadinIcon.ARROW_UP);
@@ -147,6 +193,11 @@ public class CurrencyComponent extends Composite<Div> {
             return new Icon();
     }
 
+    /**
+     * Получение цвета элементов, отображающих значение, иконку валюты
+     * @param f значение разницы курса валют
+     * @return цвет
+     */
     private String getColor(float f) {
         if (f > 0)
             return "#30BA8F";
