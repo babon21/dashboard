@@ -12,7 +12,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.apache.log4j.Logger;
 import ru.eltex.app.dashboard.MainView;
 import ru.eltex.app.dashboard.custom.CustomNotification;
-import ru.eltex.app.dashboard.exception.UserException;
+import ru.eltex.app.dashboard.exception.ApiException;
+
+import java.io.IOException;
 
 /**
  * UI компонент, отвечающий за отображение текущего курса валют
@@ -65,7 +67,9 @@ public class CurrencyComponent extends Composite<Div> {
     /** Сервис получения курса валют */
     private static CurrencyService currencyService = new CBRCurrencyService();
 
-    private static final Logger LOGGER = Logger.getLogger(CurrencyComponent.class);
+    private static final Logger logger = Logger.getLogger(CurrencyComponent.class);
+
+    private static final String ERROR_MESSAGE = "Ошибка запроса погоды";
 
 
     public CurrencyComponent(MainView view) {
@@ -102,7 +106,7 @@ public class CurrencyComponent extends Composite<Div> {
 
         update();
 
-        LOGGER.debug("Окончание создания CurrencyComponent");
+        logger.debug("Окончание создания CurrencyComponent");
     }
 
     /**
@@ -111,7 +115,7 @@ public class CurrencyComponent extends Composite<Div> {
     private void setStyle() {
         errorLabel.getStyle().set("font-size", "18pt");
 
-        LOGGER.debug("Создание CurrencyComponent");
+        logger.debug("Создание CurrencyComponent");
         getContent().setClassName("my-currency");
 
         currencyLabel.setClassName("currency-title");
@@ -155,18 +159,27 @@ public class CurrencyComponent extends Composite<Div> {
             usdIconDiff.setColor(getColor(usdDiffF));
             eurIconDiff.setColor(getColor(eurDiffF));
 
-            usdLabel.setText("USD/RUB: " + currency.getUsd());
-            eurLabel.setText("EUR/RUB: " + currency.getEur());
+            usdLabel.setText("USD: " + currency.getUsd() + " RUB");
+            eurLabel.setText("EUR: " + currency.getEur() + " RUB");
 
             verticalLayout.removeAll();
             verticalLayout.add(currencyLabel, currencyLayout, updateButton);
-        } catch (UserException e) {
+        } catch (ApiException e) {
             CustomNotification notification = new CustomNotification(e.getMessage());
             verticalLayout.remove(currencyLabel, currencyLayout, updateButton);
+            errorLabel.setText("Ошибка, API сервиса был изменен");
             verticalLayout.add(currencyLabel, errorLabel, updateButton);
 
             notification.show();
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
+        } catch (IOException e) {
+            CustomNotification notification = new CustomNotification(ERROR_MESSAGE);
+            verticalLayout.remove(currencyLabel, currencyLayout, updateButton);
+            errorLabel.setText("Сервис недоступен");
+            verticalLayout.add(currencyLabel, errorLabel, updateButton);
+
+            notification.show();
+            logger.error("Сервис недоступен: " + e.getMessage());
         }
     }
 
@@ -176,7 +189,7 @@ public class CurrencyComponent extends Composite<Div> {
      * @return значение со знаком
      */
     private String convertWithSign(float f) {
-        return f > 0.0 ? "+ " + String.valueOf(f) : String.valueOf(f);
+        return f > 0.0 ? "+ " + f : String.valueOf(f);
     }
 
     /**

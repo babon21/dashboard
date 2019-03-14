@@ -1,10 +1,11 @@
 package ru.eltex.app.dashboard.weather;
 
 import org.apache.log4j.Logger;
-import ru.eltex.app.dashboard.exception.UserException;
+import ru.eltex.app.dashboard.exception.ApiException;
 import ru.eltex.app.dashboard.util.WeatherHelper;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -30,34 +31,30 @@ public class WWOWeatherService implements WeatherService {
      * Получение прогноза погоды заданного города city
      * @param city Город, на английском
      * @return Информация о прогнозе погоды
-     * @throws UserException
+     * @throws
      */
-    public Weather getWeatherData(String city) throws UserException {
+    public Weather getWeatherData(String city) throws ApiException, IOException {
         URL url;
-        StringBuffer response = new StringBuffer();
+        StringBuilder response = new StringBuilder();
         logger.info("Получение погоды города " + city);
-        try {
-            url = new URL( baseUrl + "key=" + key +"&q=" + city +
+
+        url = new URL( baseUrl + "key=" + key +"&q=" + city +
                     "&num_of_days=2&tp=6&format=json&mca=no&lang=ru");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            InputStream is;
-            int status = connection.getResponseCode();
-            if (status != HttpURLConnection.HTTP_OK)
-                is = connection.getErrorStream();
-            else
-                is = connection.getInputStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-            String line;
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        InputStream is;
+        int status = connection.getResponseCode();
+        if (status != HttpURLConnection.HTTP_OK)
+            is = connection.getErrorStream();
+        else
+            is = connection.getInputStream();
+        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+        String line;
 
-            while((line = rd.readLine()) != null) {
-                response.append(line);
-                response.append('\r');
-            }
-            rd.close();
-
-        } catch (Exception e) {
-            throw new UserException("Ошибка запроса погоды");
+        while((line = rd.readLine()) != null) {
+            response.append(line);
+            response.append('\r');
         }
+        rd.close();
 
         String json = response.toString();
 

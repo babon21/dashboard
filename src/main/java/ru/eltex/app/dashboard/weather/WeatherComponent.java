@@ -11,9 +11,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.apache.log4j.Logger;
 import ru.eltex.app.dashboard.MainView;
 import ru.eltex.app.dashboard.custom.CustomNotification;
+import ru.eltex.app.dashboard.exception.ApiException;
 import ru.eltex.app.dashboard.util.CitiesHelper;
-import ru.eltex.app.dashboard.exception.UserException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -55,6 +56,9 @@ public class WeatherComponent extends Composite<Div> {
      *  или недоступности удаленного сервиса
      * */
     private Label errorLabel = new Label("Сервис недоступен");
+
+    private static final String ERROR_MESSAGE = "Ошибка запроса курса валюты";
+
 
     public WeatherComponent() {}
 
@@ -111,14 +115,24 @@ public class WeatherComponent extends Composite<Div> {
             verticalLayout.removeAll();
             weatherTable.add(todayWeather, tomorrowWeather);
             verticalLayout.add(title, citiesBox, weatherTable, update);
-        } catch (UserException e) {
-            logger.error(e.getMessage());
+        } catch (ApiException e) {
             verticalLayout.removeAll();
+            errorLabel.setText("Ошибка, Api сервиса был изменен");
             verticalLayout.add(title, errorLabel, update);
             verticalLayout.setHorizontalComponentAlignment(FlexComponent.Alignment.CENTER, errorLabel);
 
-            CustomNotification notification = new CustomNotification(e.getMessage());
+            CustomNotification notification = new CustomNotification("Ошибка, Api сервиса был изменен");
             notification.show();
+            logger.error(e.getMessage());
+        } catch (IOException e) {
+            verticalLayout.removeAll();
+            errorLabel.setText("Сервис недоступен");
+            verticalLayout.add(title, errorLabel, update);
+            verticalLayout.setHorizontalComponentAlignment(FlexComponent.Alignment.CENTER, errorLabel);
+
+            CustomNotification notification = new CustomNotification(ERROR_MESSAGE);
+            notification.show();
+            logger.error(e.getMessage());
         }
 
     }

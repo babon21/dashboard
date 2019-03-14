@@ -4,10 +4,10 @@ package ru.eltex.app.dashboard.exception;
  * Исключение, вызываемое в случае недоступности удаленного сервиса
  * @author darhzain
  */
-public class UserException extends Exception {
+public class ApiException extends Exception {
     private String message;
 
-    public UserException(String s) {
+    public ApiException(String s) {
         message = s;
     }
 

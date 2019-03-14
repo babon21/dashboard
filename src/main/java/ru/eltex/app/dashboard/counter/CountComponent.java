@@ -5,9 +5,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import org.apache.log4j.Logger;
 import ru.eltex.app.dashboard.custom.CustomNotification;
-import ru.eltex.app.dashboard.exception.UserException;
 
 
 /**
@@ -15,8 +13,6 @@ import ru.eltex.app.dashboard.exception.UserException;
  * @author darhzain
  */
 public class CountComponent extends Composite<Div> {
-
-    private static final Logger logger = Logger.getLogger(CountComponent.class);
 
     /** Сервис получения счетчика посещений */
     private static CountService countService = new MongoCountService();
@@ -28,9 +24,8 @@ public class CountComponent extends Composite<Div> {
         Label title = new Label("Счетчик посещений");
         title.setClassName("count-title");
 
-        try {
-            int count = countService.getCount();
-
+        int count = countService.getCount();
+        if (count != -1) {
             Label countLabel = new Label(  "" + count);
             VerticalLayout countLayout = new VerticalLayout(countLabel);
             countLayout.setAlignItems(FlexComponent.Alignment.CENTER);
@@ -41,10 +36,9 @@ public class CountComponent extends Composite<Div> {
             verticalLayout.setSizeFull();
             verticalLayout.setAlignItems(FlexComponent.Alignment.CENTER);
             getContent().add(verticalLayout);
-        } catch (UserException e) {
-            CustomNotification notification = new CustomNotification(e.getMessage());
+        } else {
+            CustomNotification notification = new CustomNotification("Ошибка получения счетчика посещений");
             notification.show();
-            logger.error(e.getMessage());
         }
 
     }

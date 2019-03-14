@@ -1,11 +1,12 @@
 package ru.eltex.app.dashboard.counter;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.apache.log4j.Logger;
 import org.bson.Document;
-import ru.eltex.app.dashboard.exception.UserException;
+
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.inc;
@@ -28,16 +29,15 @@ public class MongoCountService implements CountService {
     /**
      * Получение значение счетчика посещений
      * @return значение счетчика
-     * @throws UserException
      */
-    public int getCount() throws UserException {
+    public int getCount() {
         logger.info("Получение счетчика посещений");
-        try {
-            MongoClient mongo = new MongoClient( "localhost" , 27017 );
-            MongoDatabase database = mongo.getDatabase("dash-count");
-            MongoCollection<Document> collection = database.getCollection("doc");
+        int cnt = 0;
 
-            int cnt = 0;
+        try {
+            MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
+            MongoDatabase database = mongoClient.getDatabase("dash-count");
+            MongoCollection<Document> collection = database.getCollection("doc");
 
             Document document = collection.find(eq("id", 0)).first();
             if (document != null) {
@@ -49,10 +49,12 @@ public class MongoCountService implements CountService {
                 document.put("count", 1);
                 collection.insertOne(document);
             }
+        } catch (MongoException | IllegalArgumentException e) {
+            logger.error(e.getMessage());
 
-            return ++cnt;
-        } catch (Exception e) {
-            throw new UserException("Ошибка получения счетчика посещений");
+            return -1;
         }
+
+        return ++cnt;
     }
 }
