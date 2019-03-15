@@ -3,10 +3,13 @@ package ru.eltex.app.dashboard.currency;
 import com.jayway.jsonpath.JsonPath;
 import org.apache.log4j.Logger;
 import ru.eltex.app.dashboard.exception.ApiException;
+import ru.eltex.app.dashboard.util.Config;
+import ru.eltex.app.dashboard.util.CurrencyHelper;
 import ru.eltex.app.dashboard.util.JsonHelper;
 import ru.eltex.app.dashboard.util.ValueHelper;
 
 import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -16,15 +19,21 @@ import java.io.IOException;
  */
 public class CBRCurrencyService implements CurrencyService {
 
+    private CurrencyHelper helper;
+
     /**
      * URL запроса к API сервиса, предоставляющий данные о курсе валют
      * в формате JSON
      **/
-    private static final String URL_C = "https://www.cbr-xml-daily.ru/daily_json.js";
+    private static final String URL = Config.CURRENCY_URL;
 
     private static final Logger logger = Logger.getLogger(CBRCurrencyService.class);
 
     private static final String ERROR_MESSAGE = "API был изменен, ошибка приведения типов";
+
+    public CBRCurrencyService(CurrencyHelper helper) {
+        this.helper = helper;
+    }
 
     /**
      * Получить данные о курсе валют
@@ -35,14 +44,15 @@ public class CBRCurrencyService implements CurrencyService {
         logger.info("Получение курса валют");
         Currency currency = new Currency();
 
-        String jsonCbr = JsonHelper.jsonToString(URL_C);
+        List<String> list = helper.getCurrency(URL);
 
-        String usd = JsonPath.read(jsonCbr, "$.Valute.USD.Value").toString();
-        String usdPrev = JsonPath.read(jsonCbr, "$.Valute.USD.Previous").toString();
+        if (list.size() != 4)
+            throw new ApiException(ERROR_MESSAGE);
 
-        String eur = JsonPath.read(jsonCbr, "$.Valute.EUR.Value").toString();
-        String eurPrev = JsonPath.read(jsonCbr, "$.Valute.EUR.Previous").toString();
-
+        String usd = list.get(0);
+        String usdPrev = list.get(1);
+        String eur = list.get(2);
+        String eurPrev = list.get(3);
 
         //проверка полученных данных на соответствие типу float
         if (!ValueHelper.checkFloat(usd) || !ValueHelper.checkFloat(usdPrev)

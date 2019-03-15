@@ -50,5 +50,15 @@ public class Currency {
     public void setEur(String eur) {
         this.eur = eur;
     }
+
+    @Override
+    public String toString() {
+        return "Currency { " +
+                "usd=" + usd +
+                ", eur=" + eur +
+                ", usdDiff=" + usdDiff +
+                ", eurDiff=" + eurDiff +
+                " }";
+    }
 }
 

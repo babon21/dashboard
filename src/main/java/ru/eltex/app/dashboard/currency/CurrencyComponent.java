@@ -13,6 +13,8 @@ import org.apache.log4j.Logger;
 import ru.eltex.app.dashboard.MainView;
 import ru.eltex.app.dashboard.custom.CustomNotification;
 import ru.eltex.app.dashboard.exception.ApiException;
+import ru.eltex.app.dashboard.util.CurrencyHelper;
+import ru.eltex.app.dashboard.util.JsonHelper;
 
 import java.io.IOException;
 
@@ -65,7 +67,7 @@ public class CurrencyComponent extends Composite<Div> {
     private Label errorLabel = new Label("Сервис недоступен");
 
     /** Сервис получения курса валют */
-    private static CurrencyService currencyService = new CBRCurrencyService();
+    private static CurrencyService currencyService = new CBRCurrencyService(new CurrencyHelper());
 
     private static final Logger logger = Logger.getLogger(CurrencyComponent.class);
 

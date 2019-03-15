@@ -1,28 +1,43 @@
 package ru.eltex.app.dashboard.currency;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-//import static org.mockito.Mockito.*;
-class CBRCurrencyServiceTest {
-    @Mock
-    org.apache.log4j.Logger logger;
-    @InjectMocks
-    ru.eltex.app.dashboard.currency.CBRCurrencyService cBRCurrencyService;
+import org.apache.log4j.Logger;
+import org.junit.Test;
+import ru.eltex.app.dashboard.exception.ApiException;
+import ru.eltex.app.dashboard.util.Config;
+import ru.eltex.app.dashboard.util.CurrencyHelper;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+public class CBRCurrencyServiceTest {
+
+    final private static CurrencyHelper helper = mock(CurrencyHelper.class);
+    private Logger logger = Logger.getLogger(CBRCurrencyServiceTest.class);
 
     @Test
-    void testGetCurrency(){
-        ru.eltex.app.dashboard.currency.Currency result = cBRCurrencyService.getCurrency();
-        Assertions.assertEquals(new ru.eltex.app.dashboard.currency.Currency(), result);
+    public void getFailCurrency() {
+        //currency values list
+        List<String> list = new ArrayList<>();
+        list.add("Special Invalid String For currency");
+        list.add("2");
+        list.add("5");
+        list.add("4.6");
+
+        CurrencyService currencyService = new CBRCurrencyService(helper);
+        Currency currency = null;
+        try {
+            when(helper.getCurrency(Config.CURRENCY_URL)).thenReturn(list);
+            currency = currencyService.getCurrency();
+        } catch (IOException | ApiException e) {
+            logger.error("Failed", e);
+        }
+
+        assertNotNull(currency);
     }
 }
-
-//Generated with love by TestMe :) Please report issues and submit feature requests at: http://weirddev.com/forum#!/testme

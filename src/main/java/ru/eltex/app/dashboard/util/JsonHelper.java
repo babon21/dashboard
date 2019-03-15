@@ -1,10 +1,14 @@
 package ru.eltex.app.dashboard.util;
 
+import com.jayway.jsonpath.JsonPath;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Класс помощник для работы с запросами JSON
