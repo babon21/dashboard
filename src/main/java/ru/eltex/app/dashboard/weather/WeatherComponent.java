@@ -123,7 +123,7 @@ public class WeatherComponent extends Composite<Div> {
 
             CustomNotification notification = new CustomNotification("Ошибка, Api сервиса был изменен");
             notification.show();
-            logger.error(e.getMessage());
+            logger.error("Failed!", e);
         } catch (IOException e) {
             verticalLayout.removeAll();
             errorLabel.setText("Сервис недоступен");
@@ -132,7 +132,7 @@ public class WeatherComponent extends Composite<Div> {
 
             CustomNotification notification = new CustomNotification(ERROR_MESSAGE);
             notification.show();
-            logger.error(e.getMessage());
+            logger.error("Failed!", e);
         }
 
     }

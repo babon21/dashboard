@@ -171,7 +171,7 @@ public class CurrencyComponent extends Composite<Div> {
             verticalLayout.add(currencyLabel, errorLabel, updateButton);
 
             notification.show();
-            logger.error(e.getMessage());
+            logger.error("Failed!", e);
         } catch (IOException e) {
             CustomNotification notification = new CustomNotification(ERROR_MESSAGE);
             verticalLayout.remove(currencyLabel, currencyLayout, updateButton);
@@ -179,7 +179,7 @@ public class CurrencyComponent extends Composite<Div> {
             verticalLayout.add(currencyLabel, errorLabel, updateButton);
 
             notification.show();
-            logger.error("Сервис недоступен: " + e.getMessage());
+            logger.error("Failed!", e);
         }
     }
 

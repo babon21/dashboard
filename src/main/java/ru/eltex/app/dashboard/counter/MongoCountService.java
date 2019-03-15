@@ -50,7 +50,7 @@ public class MongoCountService implements CountService {
                 collection.insertOne(document);
             }
         } catch (MongoException | IllegalArgumentException e) {
-            logger.error(e.getMessage());
+            logger.error("Failed!" , e);
 
             return -1;
         }
