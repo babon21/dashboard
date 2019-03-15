@@ -55,7 +55,6 @@ public class MainView extends VerticalLayout {
 
         add(horizontalLayout, timeIP);
         setSizeFull();
-
     }
 
     public void updateTime() {

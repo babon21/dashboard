@@ -18,9 +18,4 @@ public class ValueHelper {
         }
         return true;
     }
-
-
-
-
-
 }

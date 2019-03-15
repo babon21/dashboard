@@ -134,6 +134,5 @@ public class WeatherComponent extends Composite<Div> {
             notification.show();
             logger.error("Failed!", e);
         }
-
     }
 }

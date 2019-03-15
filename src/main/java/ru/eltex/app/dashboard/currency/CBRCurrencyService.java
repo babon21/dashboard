@@ -20,7 +20,7 @@ public class CBRCurrencyService implements CurrencyService {
      * URL запроса к API сервиса, предоставляющий данные о курсе валют
      * в формате JSON
      **/
-    private final String URL_C = "https://www.cbr-xml-daily.ru/daily_json.js";
+    private static final String URL_C = "https://www.cbr-xml-daily.ru/daily_json.js";
 
     private static final Logger logger = Logger.getLogger(CBRCurrencyService.class);
 

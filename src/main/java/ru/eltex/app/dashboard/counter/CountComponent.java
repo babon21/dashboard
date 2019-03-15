@@ -17,7 +17,6 @@ public class CountComponent extends Composite<Div> {
     /** Сервис получения счетчика посещений */
     private static CountService countService = new MongoCountService();
 
-
     public CountComponent() {
         getContent().setClassName("my-count");
 
@@ -40,6 +39,5 @@ public class CountComponent extends Composite<Div> {
             CustomNotification notification = new CustomNotification("Ошибка получения счетчика посещений");
             notification.show();
         }
-
     }
 }

@@ -9,7 +9,7 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 public class CBRCurrencyServiceTest {
-    Logger logger = Logger.getLogger(CBRCurrencyServiceTest.class);
+    private static Logger logger = Logger.getLogger(CBRCurrencyServiceTest.class);
 
     @Test
     public void getCurrency() {

@@ -60,5 +60,4 @@ public class WWOWeatherService implements WeatherService {
 
         return WeatherHelper.getWeather(json);
     }
-
 }
