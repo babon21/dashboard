@@ -2,6 +2,7 @@ package ru.eltex.app.dashboard.currency;
 
 import org.apache.log4j.Logger;
 import ru.eltex.app.dashboard.util.CurrencyHelper;
+import ru.eltex.app.dashboard.util.JsonHelper;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,7 +39,8 @@ public class CBRCurrencyService implements CurrencyService {
         logger.info("Получение курса валют");
         Currency currency = new Currency();
 
-        List<String> list = helper.getCurrency(URL);
+        String json = JsonHelper.jsonToString(URL);
+        List<String> list = helper.getCurrency(json);
 
         if (list.size() != 4)
             throw new IllegalArgumentException("API был изменен");
