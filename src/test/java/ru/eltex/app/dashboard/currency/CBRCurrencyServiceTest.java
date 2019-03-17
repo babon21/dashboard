@@ -3,6 +3,7 @@ package ru.eltex.app.dashboard.currency;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import ru.eltex.app.dashboard.util.CurrencyHelper;
+import ru.eltex.app.dashboard.util.JsonHelper;
 
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ import static org.mockito.Mockito.when;
 
 public class CBRCurrencyServiceTest {
 
-    final private static CurrencyHelper helper = mock(CurrencyHelper.class);
+    //final private static CurrencyHelper helper = mock(CurrencyHelper.class);
     private Logger logger = Logger.getLogger(CBRCurrencyServiceTest.class);
 
     @Test
@@ -27,10 +28,13 @@ public class CBRCurrencyServiceTest {
         list.add("5");
         list.add("4.6");
 
+        CurrencyHelper helper = mock(CurrencyHelper.class);
         CurrencyService currencyService = new CBRCurrencyService(helper);
         Currency currency = null;
         try {
-            when(helper.getCurrency(CBRCurrencyService.getURL())).thenReturn(list);
+            String json = JsonHelper.jsonToString(CBRCurrencyService.getURL());
+
+            when(helper.getCurrency(json)).thenReturn(list);
             currency = currencyService.getCurrency();
         } catch (IOException | IllegalArgumentException e) {
             logger.error("Failed", e);
@@ -48,10 +52,13 @@ public class CBRCurrencyServiceTest {
         list.add("5");
         list.add("4.6");
 
+        CurrencyHelper helper = mock(CurrencyHelper.class);
         CurrencyService currencyService = new CBRCurrencyService(helper);
         Currency currency = null;
         try {
-            when(helper.getCurrency(CBRCurrencyService.getURL())).thenReturn(list);
+            String json = JsonHelper.jsonToString(CBRCurrencyService.getURL());
+
+            when(helper.getCurrency(json)).thenReturn(list);
             currency = currencyService.getCurrency();
         } catch (IOException | IllegalArgumentException e) {
             logger.error("Failed", e);
