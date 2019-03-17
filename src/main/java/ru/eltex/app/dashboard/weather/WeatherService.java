@@ -1,7 +1,5 @@
 package ru.eltex.app.dashboard.weather;
 
-import ru.eltex.app.dashboard.exception.ApiException;
-
 import java.io.IOException;
 
 /**
@@ -9,5 +7,5 @@ import java.io.IOException;
  * @author darzhain
  */
 public interface WeatherService {
-    Weather getWeatherData(String city) throws IOException, ApiException;
+    Weather getWeatherData(String city) throws IOException;
 }

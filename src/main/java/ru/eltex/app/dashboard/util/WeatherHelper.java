@@ -1,7 +1,6 @@
 package ru.eltex.app.dashboard.util;
 
 import com.jayway.jsonpath.JsonPath;
-import ru.eltex.app.dashboard.exception.ApiException;
 import ru.eltex.app.dashboard.weather.Weather;
 
 /**
@@ -38,14 +37,14 @@ public class WeatherHelper {
         return String.valueOf((int) Math.round(pressureValue));
     }
 
-    private static final String ERROR_MESSAGE = "API был изменен, ошибка приведения типов";
 
     /**
      * Получение объекта Weather, парсинг json
      * @param json Строка, в формате json, содержащая информацию о погоде
      * @return Объект, содержащий информацию о погоде
+     * @throws NumberFormatException
      */
-    public static Weather getWeather(String json) throws ApiException {
+    public static Weather getWeather(String json) throws NumberFormatException {
         Weather weather = new Weather();
 
         String cur_t =  JsonPath.read(json, "$.data.current_condition[0].temp_C").toString();
@@ -63,14 +62,6 @@ public class WeatherHelper {
         String afternoonDesc = JsonPath.read(json, "$.data.weather[1].hourly[2].lang_ru[0].value").toString();
         String evening = JsonPath.read(json, "$.data.weather[1].hourly[3].tempC").toString();
         String eveningDesc = JsonPath.read(json, "$.data.weather[1].hourly[3].lang_ru[0].value").toString();
-
-        //проверка полученных данных на соответствие типов
-        if (!ValueHelper.checkFloat(cur_t) || !ValueHelper.checkFloat(feelsC)
-                || !ValueHelper.checkFloat(humidity)
-                || !ValueHelper.checkDouble(wind) || !ValueHelper.checkDouble(pressure)
-                || !ValueHelper.checkFloat(tomorMinC) || !ValueHelper.checkFloat(tomorMaxC)
-                || !ValueHelper.checkFloat(afternoon) || !ValueHelper.checkFloat(evening))
-            throw new ApiException(ERROR_MESSAGE);
 
         weather.setCurC(cur_t);
         weather.setFeelsLikeC(feelsC);

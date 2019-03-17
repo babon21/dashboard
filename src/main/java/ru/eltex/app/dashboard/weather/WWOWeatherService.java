@@ -1,8 +1,6 @@
 package ru.eltex.app.dashboard.weather;
 
 import org.apache.log4j.Logger;
-import ru.eltex.app.dashboard.exception.ApiException;
-import ru.eltex.app.dashboard.util.Config;
 import ru.eltex.app.dashboard.util.WeatherHelper;
 
 import java.io.BufferedReader;
@@ -24,7 +22,7 @@ public class WWOWeatherService implements WeatherService {
      * */
     private static final String key = "94ec3a6e682444b480f154701192602";
 
-    private static final String baseUrl = Config.WEATHER_URL;
+    private static final String baseUrl = "http://api.worldweatheronline.com/premium/v1/weather.ashx?";
 
     private static final Logger logger = Logger.getLogger(WWOWeatherService.class);
 
@@ -32,9 +30,10 @@ public class WWOWeatherService implements WeatherService {
      * Получение прогноза погоды заданного города city
      * @param city Город, на английском
      * @return Информация о прогнозе погоды
-     * @throws
+     * @throws IOException
+     * @throws IllegalArgumentException
      */
-    public Weather getWeatherData(String city) throws ApiException, IOException {
+    public Weather getWeatherData(String city) throws IOException, IllegalArgumentException {
         URL url;
         StringBuilder response = new StringBuilder();
         logger.info("Получение погоды города " + city);

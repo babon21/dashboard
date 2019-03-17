@@ -1,12 +1,7 @@
 package ru.eltex.app.dashboard.currency;
 
-import com.jayway.jsonpath.JsonPath;
 import org.apache.log4j.Logger;
-import ru.eltex.app.dashboard.exception.ApiException;
-import ru.eltex.app.dashboard.util.Config;
 import ru.eltex.app.dashboard.util.CurrencyHelper;
-import ru.eltex.app.dashboard.util.JsonHelper;
-import ru.eltex.app.dashboard.util.ValueHelper;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,11 +20,9 @@ public class CBRCurrencyService implements CurrencyService {
      * URL запроса к API сервиса, предоставляющий данные о курсе валют
      * в формате JSON
      **/
-    private static final String URL = Config.CURRENCY_URL;
+    private static final String URL = "https://www.cbr-xml-daily.ru/daily_json.js";
 
     private static final Logger logger = Logger.getLogger(CBRCurrencyService.class);
-
-    private static final String ERROR_MESSAGE = "API был изменен, ошибка приведения типов";
 
     public CBRCurrencyService(CurrencyHelper helper) {
         this.helper = helper;
@@ -38,27 +31,22 @@ public class CBRCurrencyService implements CurrencyService {
     /**
      * Получить данные о курсе валют
      * @return Информацию о курсе валют
-     * @throws ApiException
+     * @throws IllegalArgumentException
+     * @throws IOException
      */
-    public Currency getCurrency() throws ApiException, IOException {
+    public Currency getCurrency() throws IllegalArgumentException, IOException {
         logger.info("Получение курса валют");
         Currency currency = new Currency();
 
         List<String> list = helper.getCurrency(URL);
 
         if (list.size() != 4)
-            throw new ApiException(ERROR_MESSAGE);
+            throw new IllegalArgumentException("API был изменен");
 
         String usd = list.get(0);
         String usdPrev = list.get(1);
         String eur = list.get(2);
         String eurPrev = list.get(3);
-
-        //проверка полученных данных на соответствие типу float
-        if (!ValueHelper.checkFloat(usd) || !ValueHelper.checkFloat(usdPrev)
-                || !ValueHelper.checkFloat(eur) || !ValueHelper.checkFloat(eurPrev)) {
-            throw new ApiException(ERROR_MESSAGE);
-        }
 
         //округление до 3 знака после запятой
         float usdDiff = Float.parseFloat(usd) - Float.parseFloat(usdPrev);
@@ -73,5 +61,9 @@ public class CBRCurrencyService implements CurrencyService {
         currency.setEurDiff(eurDiff);
 
         return currency;
+    }
+
+    public static String getURL() {
+        return URL;
     }
 }

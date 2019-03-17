@@ -1,8 +1,6 @@
 package ru.eltex.app.dashboard.currency;
 
 
-import ru.eltex.app.dashboard.exception.ApiException;
-
 import java.io.IOException;
 
 /**
@@ -10,5 +8,5 @@ import java.io.IOException;
  * @author darzhain
  */
 public interface CurrencyService {
-    Currency getCurrency() throws IOException, ApiException;
+    Currency getCurrency() throws IOException, IllegalArgumentException;
 }

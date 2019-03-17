@@ -2,8 +2,6 @@ package ru.eltex.app.dashboard.currency;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
-import ru.eltex.app.dashboard.exception.ApiException;
-import ru.eltex.app.dashboard.util.Config;
 import ru.eltex.app.dashboard.util.CurrencyHelper;
 
 
@@ -32,12 +30,12 @@ public class CBRCurrencyServiceTest {
         CurrencyService currencyService = new CBRCurrencyService(helper);
         Currency currency = null;
         try {
-            when(helper.getCurrency(Config.CURRENCY_URL)).thenReturn(list);
+            when(helper.getCurrency(CBRCurrencyService.getURL())).thenReturn(list);
             currency = currencyService.getCurrency();
-        } catch (IOException | ApiException e) {
+        } catch (IOException | IllegalArgumentException e) {
             logger.error("Failed", e);
         }
 
-        assertNotNull(currency);
+        assertNull(currency);
     }
 }

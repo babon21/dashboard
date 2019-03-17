@@ -11,7 +11,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.apache.log4j.Logger;
 import ru.eltex.app.dashboard.MainView;
 import ru.eltex.app.dashboard.custom.CustomNotification;
-import ru.eltex.app.dashboard.exception.ApiException;
 import ru.eltex.app.dashboard.util.CitiesHelper;
 
 import java.io.IOException;
@@ -105,34 +104,38 @@ public class WeatherComponent extends Composite<Div> {
     private void update_info() {
         try {
             Weather weather = weatherService.getWeatherData(CitiesHelper.getCity(citiesBox.getValue()));
-
-            logger.info("Обновление сегодняшней погоды");
-            todayWeather.update(weather);
-
-            logger.info("Обновление завтрашней погоды");
-            tomorrowWeather.update(weather);
-
-            verticalLayout.removeAll();
-            weatherTable.add(todayWeather, tomorrowWeather);
-            verticalLayout.add(title, citiesBox, weatherTable, update);
-        } catch (ApiException e) {
-            verticalLayout.removeAll();
-            errorLabel.setText("Ошибка, Api сервиса был изменен");
-            verticalLayout.add(title, errorLabel, update);
-            verticalLayout.setHorizontalComponentAlignment(FlexComponent.Alignment.CENTER, errorLabel);
-
-            CustomNotification notification = new CustomNotification("Ошибка, Api сервиса был изменен");
-            notification.show();
+            updateUI(weather);
+        } catch (IllegalArgumentException e) {
+            noticeUser("Ошибка, Api сервиса был изменен", "Ошибка, Api сервиса был изменен");
             logger.error("Failed!", e);
         } catch (IOException e) {
-            verticalLayout.removeAll();
-            errorLabel.setText("Сервис недоступен");
-            verticalLayout.add(title, errorLabel, update);
-            verticalLayout.setHorizontalComponentAlignment(FlexComponent.Alignment.CENTER, errorLabel);
-
-            CustomNotification notification = new CustomNotification(ERROR_MESSAGE);
-            notification.show();
+            noticeUser(ERROR_MESSAGE, "Сервис недоступен");
+            logger.error("Failed!", e);
+        } catch (Exception e) {
+            noticeUser("Ошибка", "Сервис недоступен");
             logger.error("Failed!", e);
         }
+    }
+
+    private void updateUI(Weather weather) {
+        logger.info("Обновление сегодняшней погоды");
+        todayWeather.update(weather);
+
+        logger.info("Обновление завтрашней погоды");
+        tomorrowWeather.update(weather);
+
+        verticalLayout.removeAll();
+        weatherTable.add(todayWeather, tomorrowWeather);
+        verticalLayout.add(title, citiesBox, weatherTable, update);
+    }
+
+    private void noticeUser(String notice, String errorText) {
+        verticalLayout.removeAll();
+        errorLabel.setText(errorText);
+        verticalLayout.add(title, errorLabel, update);
+        verticalLayout.setHorizontalComponentAlignment(FlexComponent.Alignment.CENTER, errorLabel);
+
+        CustomNotification notification = new CustomNotification(notice);
+        notification.show();
     }
 }

@@ -12,9 +12,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.apache.log4j.Logger;
 import ru.eltex.app.dashboard.MainView;
 import ru.eltex.app.dashboard.custom.CustomNotification;
-import ru.eltex.app.dashboard.exception.ApiException;
 import ru.eltex.app.dashboard.util.CurrencyHelper;
-import ru.eltex.app.dashboard.util.JsonHelper;
 
 import java.io.IOException;
 
@@ -75,6 +73,8 @@ public class CurrencyComponent extends Composite<Div> {
 
 
     public CurrencyComponent(MainView view) {
+        logger.debug("Создание CurrencyComponent");
+
         icons = new VerticalLayout(usdIconDiff, eurIconDiff);
         currencyLabel = new Label("Курсы валют");
 
@@ -117,7 +117,6 @@ public class CurrencyComponent extends Composite<Div> {
     private void setStyle() {
         errorLabel.getStyle().set("font-size", "18pt");
 
-        logger.debug("Создание CurrencyComponent");
         getContent().setClassName("my-currency");
 
         currencyLabel.setClassName("currency-title");
@@ -143,46 +142,51 @@ public class CurrencyComponent extends Composite<Div> {
     private void update() {
         try {
             Currency currency = currencyService.getCurrency();
-
-            float usdDiffF = currency.getUsdDiff();
-            float eurDiffF = currency.getEurDiff();
-
-            icons.removeAll();
-            usdIconDiff = getIcon(usdDiffF);
-            eurIconDiff = getIcon(eurDiffF);
-            icons.add(usdIconDiff, eurIconDiff);
-
-            usdDiff.setText(convertWithSign(usdDiffF));
-            eurDiff.setText(convertWithSign(eurDiffF));
-
-            usdDiff.getStyle().set("color", getColor(usdDiffF));
-            eurDiff.getStyle().set("color", getColor(eurDiffF));
-
-            usdIconDiff.setColor(getColor(usdDiffF));
-            eurIconDiff.setColor(getColor(eurDiffF));
-
-            usdLabel.setText("USD: " + currency.getUsd() + " RUB");
-            eurLabel.setText("EUR: " + currency.getEur() + " RUB");
-
-            verticalLayout.removeAll();
-            verticalLayout.add(currencyLabel, currencyLayout, updateButton);
-        } catch (ApiException e) {
-            CustomNotification notification = new CustomNotification(e.getMessage());
-            verticalLayout.remove(currencyLabel, currencyLayout, updateButton);
-            errorLabel.setText("Ошибка, API сервиса был изменен");
-            verticalLayout.add(currencyLabel, errorLabel, updateButton);
-
-            notification.show();
-            logger.error("Failed!", e);
+            updateUI(currency);
+        } catch (IllegalArgumentException e) {
+            noticeUser(e.getMessage(), "Ошибка, API сервиса был изменен");
+            logger.error("Failed! API был изменен!", e);
         } catch (IOException e) {
-            CustomNotification notification = new CustomNotification(ERROR_MESSAGE);
-            verticalLayout.remove(currencyLabel, currencyLayout, updateButton);
-            errorLabel.setText("Сервис недоступен");
-            verticalLayout.add(currencyLabel, errorLabel, updateButton);
-
-            notification.show();
+            noticeUser(ERROR_MESSAGE, "Сервис недоступен");
+            logger.error("Failed!", e);
+        } catch (Exception e) {
+            noticeUser("Ошибка", "Сервис недоступен");
             logger.error("Failed!", e);
         }
+    }
+
+    private void updateUI(Currency currency) {
+        float usdDiffF = currency.getUsdDiff();
+        float eurDiffF = currency.getEurDiff();
+
+        icons.removeAll();
+        usdIconDiff = getIcon(usdDiffF);
+        eurIconDiff = getIcon(eurDiffF);
+        icons.add(usdIconDiff, eurIconDiff);
+
+        usdDiff.setText(convertWithSign(usdDiffF));
+        eurDiff.setText(convertWithSign(eurDiffF));
+
+        usdDiff.getStyle().set("color", getColor(usdDiffF));
+        eurDiff.getStyle().set("color", getColor(eurDiffF));
+
+        usdIconDiff.setColor(getColor(usdDiffF));
+        eurIconDiff.setColor(getColor(eurDiffF));
+
+        usdLabel.setText("USD: " + currency.getUsd() + " RUB");
+        eurLabel.setText("EUR: " + currency.getEur() + " RUB");
+
+        verticalLayout.removeAll();
+        verticalLayout.add(currencyLabel, currencyLayout, updateButton);
+    }
+
+    private void noticeUser(String notice, String errorText) {
+        verticalLayout.remove(currencyLabel, currencyLayout, updateButton);
+        errorLabel.setText(errorText);
+        verticalLayout.add(currencyLabel, errorLabel, updateButton);
+
+        CustomNotification notification = new CustomNotification(notice);
+        notification.show();
     }
 
     /**
