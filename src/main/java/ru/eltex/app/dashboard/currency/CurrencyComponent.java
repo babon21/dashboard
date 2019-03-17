@@ -148,13 +148,17 @@ public class CurrencyComponent extends Composite<Div> {
             logger.error("Failed! API был изменен!", e);
         } catch (IOException e) {
             noticeUser(ERROR_MESSAGE, "Сервис недоступен");
-            logger.error("Failed!", e);
+            logger.error("Failed! Connection error", e);
         } catch (Exception e) {
             noticeUser("Ошибка", "Сервис недоступен");
             logger.error("Failed!", e);
         }
     }
 
+    /**
+     * Обновить UI валюты
+     * @param currency объект валюты
+     */
     private void updateUI(Currency currency) {
         float usdDiffF = currency.getUsdDiff();
         float eurDiffF = currency.getEurDiff();
@@ -180,6 +184,11 @@ public class CurrencyComponent extends Composite<Div> {
         verticalLayout.add(currencyLabel, currencyLayout, updateButton);
     }
 
+    /**
+     * Уведомить пользователя, вывести уведомление и обновить UI
+     * @param notice строка, которая будет содержать уведомление
+     * @param errorText строка, которая будет содержать label в UI
+     */
     private void noticeUser(String notice, String errorText) {
         verticalLayout.remove(currencyLabel, currencyLayout, updateButton);
         errorLabel.setText(errorText);

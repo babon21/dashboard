@@ -18,6 +18,7 @@ public class CitiesHelper {
         cities.put("Санкт-Петербург", "Saint-Petersburg");
     }
 
+
     public static String getCity(String city) {
         return cities.getOrDefault(city, "Novosibirsk");
     }

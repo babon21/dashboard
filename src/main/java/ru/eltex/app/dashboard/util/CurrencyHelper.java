@@ -7,6 +7,15 @@ import java.util.List;
 
 public class CurrencyHelper {
 
+    /**
+     * Получает список строк-валют
+     * @param json строка, содержащая json валюты
+     * @return список list, где
+     * list[0]: usd
+     * list[1]: previous usd
+     * list[2]: eur
+     * list[3]: previous eur
+     */
     public List<String> getCurrency(String json) {
         List<String> list = new ArrayList<>();
 

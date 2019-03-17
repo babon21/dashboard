@@ -1,6 +1,7 @@
 package ru.eltex.app.dashboard.weather;
 
 import org.apache.log4j.Logger;
+import ru.eltex.app.dashboard.util.JsonHelper;
 import ru.eltex.app.dashboard.util.WeatherHelper;
 
 import java.io.BufferedReader;
@@ -29,41 +30,21 @@ public class WWOWeatherService implements WeatherService {
 
     /**
      * Получение прогноза погоды заданного города city
-     * @param city Город, на английском
+     * @param city строка-город
      * @return Информация о прогнозе погоды
-     * @throws IOException
-     * @throws IllegalArgumentException
+     * @throws IOException если возникла ошибка ввода-вывода, или нет доступа к сети.
+     * @throws IllegalArgumentException если удаленный API был изменен,
+     * типы обрабатываемых данных не совпадают.
      */
     public Weather getWeatherData(String city) throws IOException, IllegalArgumentException {
         logger.info("Получение погоды города " + city);
 
         URL url = getURL(city);
-
-        String json = getWeatherJson(url);
+        String json = JsonHelper.jsonToString(url.toString());
 
         return WeatherHelper.getWeather(json);
     }
 
-    private String getWeatherJson(URL url) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        StringBuilder response = new StringBuilder();
-        InputStream is;
-        int status = connection.getResponseCode();
-        if (status != HttpURLConnection.HTTP_OK)
-            is = connection.getErrorStream();
-        else
-            is = connection.getInputStream();
-        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-        String line;
-
-        while((line = rd.readLine()) != null) {
-            response.append(line);
-            response.append('\r');
-        }
-        rd.close();
-
-        return response.toString();
-    }
 
     private URL getURL(String city) throws MalformedURLException {
         return new URL( baseUrl + "key=" + key +"&q=" + city +

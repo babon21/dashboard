@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class CBRCurrencyService implements CurrencyService {
 
+    /** Класс-помощник, для обработки json  */
     private CurrencyHelper helper;
 
     /**
@@ -32,8 +33,9 @@ public class CBRCurrencyService implements CurrencyService {
     /**
      * Получить данные о курсе валют
      * @return Информацию о курсе валют
-     * @throws IllegalArgumentException
-     * @throws IOException
+     * @throws IllegalArgumentException если удаленный API был изменен,
+     * типы обрабатываемых данных не совпадают.
+     * @throws IOException если возникла ошибка ввода-вывода, или нет доступа к сети.
      */
     public Currency getCurrency() throws IllegalArgumentException, IOException {
         logger.info("Получение курса валют");
@@ -65,6 +67,10 @@ public class CBRCurrencyService implements CurrencyService {
         return currency;
     }
 
+    /**
+     * Получить URL, по которому делается запрос на удаленный сервис
+     * @return URL
+     */
     public static String getURL() {
         return URL;
     }

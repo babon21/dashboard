@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 import ru.eltex.app.dashboard.MainView;
 import ru.eltex.app.dashboard.custom.CustomNotification;
 import ru.eltex.app.dashboard.util.CitiesHelper;
-import ru.eltex.app.dashboard.util.WeatherHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
  * @author darhzain
  */
 public class WeatherComponent extends Composite<Div> {
-
 
     /** Заголовок компонента */
     private Label title;
@@ -106,16 +104,20 @@ public class WeatherComponent extends Composite<Div> {
             updateUI(weather);
         } catch (IllegalArgumentException e) {
             noticeUser("Ошибка, Api сервиса был изменен", "Ошибка, Api сервиса был изменен");
-            logger.error("Failed!", e);
+            logger.error("Failed! API был изменен!", e);
         } catch (IOException e) {
             noticeUser(ERROR_MESSAGE, "Сервис недоступен");
-            logger.error("Failed!", e);
+            logger.error("Failed! Connection error", e);
         } catch (Exception e) {
             noticeUser("Ошибка", "Сервис недоступен");
             logger.error("Failed!", e);
         }
     }
 
+    /**
+     * Обновить UI погоды
+     * @param weather Объект-погода
+     */
     private void updateUI(Weather weather) {
         logger.info("Обновление сегодняшней погоды");
         todayWeather.update(weather);
@@ -128,6 +130,11 @@ public class WeatherComponent extends Composite<Div> {
         verticalLayout.add(title, citiesBox, weatherTable, update);
     }
 
+    /**
+     * Уведомить пользователя, вывести уведомление и обновить UI
+     * @param notice строка, которая будет содержать уведомление
+     * @param errorText строка, которая будет содержать label в UI
+     */
     private void noticeUser(String notice, String errorText) {
         verticalLayout.removeAll();
         errorLabel.setText(errorText);

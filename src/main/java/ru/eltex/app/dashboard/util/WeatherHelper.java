@@ -15,8 +15,8 @@ public class WeatherHelper {
 
     /**
      * Преобразование ветра из км/ч в м/с
-     * @param wind
-     * @return ветер в м/с
+     * @param wind значения ветра в км/ч
+     * @return значение ветра в м/с
      */
     private static float convertWind(float wind) {
         float windValue = wind * 0.28f;
@@ -26,8 +26,8 @@ public class WeatherHelper {
 
     /**
      * Преобразование давления из милли баров в мм рт.ст.
-     * @param pressure
-     * @return давление в мм рт.ст.
+     * @param pressure значение давления в милли барах
+     * @return значение давления в мм рт.ст.
      */
     private static int convertPressure(float pressure) {
         //перевод из милли бар в мм рт.ст.
@@ -42,7 +42,7 @@ public class WeatherHelper {
      * Получение объекта Weather, парсинг json
      * @param json Строка, в формате json, содержащая информацию о погоде
      * @return Объект, содержащий информацию о погоде
-     * @throws NumberFormatException
+     * @throws IllegalArgumentException если json содержит невалидные данные
      */
     public static Weather getWeather(String json) throws IllegalArgumentException {
         Weather weather = new Weather();
@@ -85,6 +85,16 @@ public class WeatherHelper {
         return weather;
     }
 
+    /**
+     * Получение списка строк, содержащий информации о погоде
+     * @param json строка, содержащая json прогноза погоды
+     * @return список list, где
+     * list[0]: текущая темп-ра, list[1]: ощущение темп-ры, list[2]: влажность,
+     * list[3]: скорость ветра, list[4]: давление, list[5]: мин температура,
+     * list[6]: макс темп-ра, list[7]: темп-ра после обеда,
+     * list[8]: темп-ра вечером, list[9]: описание погоды
+     * list[10]: погода после обеда, list[11]: погода вечером
+     */
     private static List<String> parseJsonWeather(String json) {
         List<String> list = new ArrayList<>();
 

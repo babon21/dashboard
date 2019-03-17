@@ -15,9 +15,6 @@ import static ru.eltex.app.dashboard.util.WeatherHelper.DEGREE;
  */
 public class TodayWeather extends Composite<Div> {
 
-    /** Заголовк компонента */
-    private Label title;
-
     /** Текущая температура */
     private Label curC = new Label();
 
@@ -32,13 +29,10 @@ public class TodayWeather extends Composite<Div> {
 
     private Label desc = new Label();
 
-    /** Основной Layout компонента  */
-    private VerticalLayout now;
-
     public TodayWeather() {
-        title = new Label("Сейчас");
+        Label title = new Label("Сейчас");
 
-        now = new VerticalLayout(title, curC, desc);
+        VerticalLayout now = new VerticalLayout(title, curC, desc);
         now.setAlignItems(FlexComponent.Alignment.CENTER);
         now.setClassName("now-layout");
         now.setSizeFull();
