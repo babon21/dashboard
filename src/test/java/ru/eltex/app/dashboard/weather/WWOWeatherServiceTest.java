@@ -23,6 +23,7 @@ public class WWOWeatherServiceTest {
             logger.error("Failed test", e);
         }
 
+        System.out.println(weather);
         assertNotNull(weather);
     }
 }

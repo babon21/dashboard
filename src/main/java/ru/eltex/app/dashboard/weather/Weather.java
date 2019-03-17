@@ -139,4 +139,22 @@ public class Weather {
     public void setPressure(float pressure) {
         this.pressure = pressure;
     }
+
+    @Override
+    public String toString() {
+        return "Weather { " +
+                "curTemp=" + curTemp +
+                ", feelsLikeC=" + feelsLikeC +
+                ", wind=" + wind +
+                ", humidity=" + humidity +
+                ", pressure=" + pressure +
+                ", desc=" + desc +
+                ", minC=" + minC +
+                ", maxC=" + maxC +
+                ", afternoon=" + afternoon +
+                ", afternoonDesc=" + afternoonDesc +
+                ", evening=" + evening +
+                ", eveningDesc=" + eveningDesc +
+                " }";
+    }
 }

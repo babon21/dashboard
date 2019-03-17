@@ -73,8 +73,6 @@ public class CurrencyComponent extends Composite<Div> {
 
 
     public CurrencyComponent(MainView view) {
-        logger.debug("Создание CurrencyComponent");
-
         icons = new VerticalLayout(usdIconDiff, eurIconDiff);
         currencyLabel = new Label("Курсы валют");
 
@@ -107,9 +105,7 @@ public class CurrencyComponent extends Composite<Div> {
         getContent().add(verticalLayout);
 
         update();
-
-        logger.debug("Окончание создания CurrencyComponent");
-    }
+        }
 
     /**
      * Установка стилей UI элементов

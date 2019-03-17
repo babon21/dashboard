@@ -40,11 +40,29 @@ public class WWOWeatherService implements WeatherService {
         logger.info("Получение погоды города " + city);
 
         URL url = getURL(city);
-        String json = JsonHelper.jsonToString(url.toString());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        InputStream is;
+        StringBuilder response = new StringBuilder();
+
+        int status = connection.getResponseCode();
+        if (status != HttpURLConnection.HTTP_OK)
+            is = connection.getErrorStream();
+        else
+            is = connection.getInputStream();
+        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+        String line;
+
+        while((line = rd.readLine()) != null) {
+            response.append(line);
+            response.append('\r');
+        }
+        rd.close();
+
+        String json = response.toString();
 
         return WeatherHelper.getWeather(json);
     }
-
 
     private URL getURL(String city) throws MalformedURLException {
         return new URL( baseUrl + "key=" + key +"&q=" + city +
