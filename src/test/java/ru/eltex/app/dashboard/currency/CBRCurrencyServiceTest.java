@@ -38,4 +38,27 @@ public class CBRCurrencyServiceTest {
 
         assertNull(currency);
     }
+
+    @Test
+    public void getCurrency() {
+        //currency values list
+        List<String> list = new ArrayList<>();
+        list.add("22");
+        list.add("2");
+        list.add("5");
+        list.add("4.6");
+
+        CurrencyService currencyService = new CBRCurrencyService(helper);
+        Currency currency = null;
+        try {
+            when(helper.getCurrency(CBRCurrencyService.getURL())).thenReturn(list);
+            currency = currencyService.getCurrency();
+        } catch (IOException | IllegalArgumentException e) {
+            logger.error("Failed", e);
+        }
+
+        System.out.println(currency);
+        assertNotNull(currency);
+    }
+
 }
