@@ -15,11 +15,10 @@ public class WeatherHelper {
      * @param wind
      * @return ветер в м/с
      */
-    private static String convertWind(String wind) {
-        double windValue = Double.parseDouble(wind);
-        windValue *= 0.28;
-        windValue = (double) Math.round(windValue * 10) / 10;
-        return String.valueOf(windValue);
+    private static float convertWind(float wind) {
+        float windValue = wind * 0.28f;
+        windValue = (float) Math.round(windValue * 10) / 10;
+        return windValue;
     }
 
     /**
@@ -27,14 +26,12 @@ public class WeatherHelper {
      * @param pressure
      * @return давление в мм рт.ст.
      */
-    private static String convertPressure(String pressure) {
-        double pressureValue = Double.parseDouble(pressure);
-
+    private static int convertPressure(float pressure) {
         //перевод из милли бар в мм рт.ст.
-        pressureValue *= 0.750064;
+        float pressureValue = pressure * 0.750064f;
 
         //округление до целого
-        return String.valueOf((int) Math.round(pressureValue));
+        return Math.round(pressureValue);
     }
 
 
@@ -63,23 +60,36 @@ public class WeatherHelper {
         String evening = JsonPath.read(json, "$.data.weather[1].hourly[3].tempC").toString();
         String eveningDesc = JsonPath.read(json, "$.data.weather[1].hourly[3].lang_ru[0].value").toString();
 
-        weather.setCurC(cur_t);
-        weather.setFeelsLikeC(feelsC);
-        weather.setHumidity(humidity);
+        int curValue = Integer.parseInt(cur_t);
+        int feelsCValue = Integer.parseInt(feelsC);
+        int humidityValue = Integer.parseInt(humidity);
+
+        float windValue = Float.parseFloat(wind);
+        float pressureValue = Float.parseFloat(pressure);
+
+        int tomorMinCValue = Integer.parseInt(tomorMinC);
+        int tomorMaxCValue = Integer.parseInt(tomorMaxC);
+
+        int afternoonValue = Integer.parseInt(afternoon);
+        int eveningValue = Integer.parseInt(evening);
+
+        weather.setCurTemp(curValue);
+        weather.setFeelsLikeC(feelsCValue);
+        weather.setHumidity(humidityValue);
         weather.setDesc(desc);
 
-        wind =  WeatherHelper.convertWind(wind);
-        weather.setWind(wind);
+        windValue =  WeatherHelper.convertWind(windValue);
+        weather.setWind(windValue);
 
-        pressure = WeatherHelper.convertPressure(pressure);
-        weather.setPressure(pressure);
+        pressureValue = WeatherHelper.convertPressure(pressureValue);
+        weather.setPressure(pressureValue);
 
-        weather.setMinC(tomorMinC);
-        weather.setMaxC(tomorMaxC);
+        weather.setMinC(tomorMinCValue);
+        weather.setMaxC(tomorMaxCValue);
 
-        weather.setAfternoon(afternoon);
+        weather.setAfternoon(afternoonValue);
         weather.setAfternoonDesc(afternoonDesc);
-        weather.setEvening(evening);
+        weather.setEvening(eveningValue);
         weather.setEveningDesc(eveningDesc);
 
         return weather;

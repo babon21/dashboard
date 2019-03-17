@@ -69,7 +69,7 @@ public class TodayWeather extends Composite<Div> {
      * @param weather Объект, содержащий информацию о погоде
      */
     public void update(Weather weather) {
-        curC.setText(weather.getCurC() + DEGREE + "C");
+        curC.setText(weather.getCurTemp() + DEGREE + "C");
         desc.setText(weather.getDesc());
         feelsLikeC.setText("Ощущается " + weather.getFeelsLikeC() + DEGREE + "C");
         wind.setText("ветер     " + weather.getWind() + " м/c");

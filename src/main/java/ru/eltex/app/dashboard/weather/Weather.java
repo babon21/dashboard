@@ -7,38 +7,38 @@ package ru.eltex.app.dashboard.weather;
 public class Weather {
 
     /** Текущая температура */
-    private String curC;
+    private int curTemp;
 
     /** Температура ощущается как */
-    private String feelsLikeC;
+    private int feelsLikeC;
 
     /** Текущий ветер м/c */
-    private String wind;
+    private float wind;
 
     /** Текущая влажность (%) */
-    private String humidity;
+    private int humidity;
 
     /** Текущее давление мм рт.ст. */
-    private String pressure;
+    private float pressure;
 
     /** Текущее описание погоды*/
     private String desc;
 
 
     /** Минимальная температура на следующий день */
-    private String minC;
+    private int minC;
 
     /** Максимальная температура на следующий день */
-    private String maxC;
+    private int maxC;
 
     /** Температура на следующий день после обеда */
-    private String afternoon;
+    private int afternoon;
 
     /** Описание погоды на следующий день после обеда */
     private String afternoonDesc;
 
     /** Температура на следующий день вечером */
-    private String evening;
+    private int evening;
 
     /** Описание погоды на следующий день на вечер */
     private String eveningDesc;
@@ -60,27 +60,27 @@ public class Weather {
         this.eveningDesc = eveningDesc;
     }
 
-    public String getAfternoon() {
+    public int getAfternoon() {
         return afternoon;
     }
 
-    public void setAfternoon(String afternoon) {
+    public void setAfternoon(int afternoon) {
         this.afternoon = afternoon;
     }
 
-    public String getEvening() {
+    public int getEvening() {
         return evening;
     }
 
-    public void setEvening(String evening) {
+    public void setEvening(int evening) {
         this.evening = evening;
     }
 
-    public String getWind() {
+    public float getWind() {
         return wind;
     }
 
-    public void setWind(String wind) {
+    public void setWind(float wind) {
         this.wind = wind;
     }
 
@@ -92,51 +92,51 @@ public class Weather {
         this.desc = desc;
     }
 
-    public String getCurC() {
-        return curC;
+    public int getCurTemp() {
+        return curTemp;
     }
 
-    public void setCurC(String curC) {
-        this.curC = curC;
+    public void setCurTemp(int curTemp) {
+        this.curTemp = curTemp;
     }
 
-    public String getMinC() {
+    public int getMinC() {
         return minC;
     }
 
-    public void setMinC(String minC) {
+    public void setMinC(int minC) {
         this.minC = minC;
     }
 
-    public String getMaxC() {
+    public int getMaxC() {
         return maxC;
     }
 
-    public void setMaxC(String maxC) {
+    public void setMaxC(int maxC) {
         this.maxC = maxC;
     }
 
-    public String getFeelsLikeC() {
+    public int getFeelsLikeC() {
         return feelsLikeC;
     }
 
-    public void setFeelsLikeC(String feelsLikeC) {
+    public void setFeelsLikeC(int feelsLikeC) {
         this.feelsLikeC = feelsLikeC;
     }
 
-    public String getHumidity() {
+    public int getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(String humidity) {
+    public void setHumidity(int humidity) {
         this.humidity = humidity;
     }
 
-    public String getPressure() {
+    public float getPressure() {
         return pressure;
     }
 
-    public void setPressure(String pressure) {
+    public void setPressure(float pressure) {
         this.pressure = pressure;
     }
 }
