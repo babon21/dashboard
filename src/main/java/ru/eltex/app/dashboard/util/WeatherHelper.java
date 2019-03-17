@@ -3,6 +3,9 @@ package ru.eltex.app.dashboard.util;
 import com.jayway.jsonpath.JsonPath;
 import ru.eltex.app.dashboard.weather.Weather;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Основной класс(layout), содержащий все остальные пользовательские компоненты
  * @author darzhain
@@ -41,8 +44,49 @@ public class WeatherHelper {
      * @return Объект, содержащий информацию о погоде
      * @throws NumberFormatException
      */
-    public static Weather getWeather(String json) throws NumberFormatException {
+    public static Weather getWeather(String json) throws IllegalArgumentException {
         Weather weather = new Weather();
+        //12 элементов
+        List<String> list = parseJsonWeather(json);
+
+        int curValue = Integer.parseInt(list.get(0));
+        int feelsCValue = Integer.parseInt(list.get(1));
+        int humidityValue = Integer.parseInt(list.get(2));
+
+        float windValue = Float.parseFloat(list.get(3));
+        float pressureValue = Float.parseFloat(list.get(4));
+
+        int tomorMinCValue = Integer.parseInt(list.get(5));
+        int tomorMaxCValue = Integer.parseInt(list.get(6));
+
+        int afternoonValue = Integer.parseInt(list.get(7));
+        int eveningValue = Integer.parseInt(list.get(8));
+
+        weather.setDesc(list.get(9));
+        weather.setAfternoonDesc(list.get(10));
+        weather.setEveningDesc(list.get(11));
+
+        weather.setCurTemp(curValue);
+        weather.setFeelsLikeC(feelsCValue);
+        weather.setHumidity(humidityValue);
+
+        windValue =  convertWind(windValue);
+        weather.setWind(windValue);
+
+        pressureValue = convertPressure(pressureValue);
+        weather.setPressure(pressureValue);
+
+        weather.setMinC(tomorMinCValue);
+        weather.setMaxC(tomorMaxCValue);
+
+        weather.setAfternoon(afternoonValue);
+        weather.setEvening(eveningValue);
+
+        return weather;
+    }
+
+    private static List<String> parseJsonWeather(String json) {
+        List<String> list = new ArrayList<>();
 
         String cur_t =  JsonPath.read(json, "$.data.current_condition[0].temp_C").toString();
         String feelsC =  JsonPath.read(json, "$.data.current_condition[0].FeelsLikeC").toString();
@@ -60,38 +104,23 @@ public class WeatherHelper {
         String evening = JsonPath.read(json, "$.data.weather[1].hourly[3].tempC").toString();
         String eveningDesc = JsonPath.read(json, "$.data.weather[1].hourly[3].lang_ru[0].value").toString();
 
-        int curValue = Integer.parseInt(cur_t);
-        int feelsCValue = Integer.parseInt(feelsC);
-        int humidityValue = Integer.parseInt(humidity);
+        list.add(cur_t);
+        list.add(feelsC);
+        list.add(humidity);
 
-        float windValue = Float.parseFloat(wind);
-        float pressureValue = Float.parseFloat(pressure);
+        list.add(wind);
+        list.add(pressure);
 
-        int tomorMinCValue = Integer.parseInt(tomorMinC);
-        int tomorMaxCValue = Integer.parseInt(tomorMaxC);
+        list.add(tomorMinC);
+        list.add(tomorMaxC);
 
-        int afternoonValue = Integer.parseInt(afternoon);
-        int eveningValue = Integer.parseInt(evening);
+        list.add(afternoon);
+        list.add(evening);
 
-        weather.setCurTemp(curValue);
-        weather.setFeelsLikeC(feelsCValue);
-        weather.setHumidity(humidityValue);
-        weather.setDesc(desc);
+        list.add(desc);
+        list.add(afternoonDesc);
+        list.add(eveningDesc);
 
-        windValue =  WeatherHelper.convertWind(windValue);
-        weather.setWind(windValue);
-
-        pressureValue = WeatherHelper.convertPressure(pressureValue);
-        weather.setPressure(pressureValue);
-
-        weather.setMinC(tomorMinCValue);
-        weather.setMaxC(tomorMaxCValue);
-
-        weather.setAfternoon(afternoonValue);
-        weather.setAfternoonDesc(afternoonDesc);
-        weather.setEvening(eveningValue);
-        weather.setEveningDesc(eveningDesc);
-
-        return weather;
+        return list;
     }
 }

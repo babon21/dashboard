@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import ru.eltex.app.dashboard.MainView;
 import ru.eltex.app.dashboard.custom.CustomNotification;
 import ru.eltex.app.dashboard.util.CitiesHelper;
+import ru.eltex.app.dashboard.util.WeatherHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,9 +31,6 @@ public class WeatherComponent extends Composite<Div> {
 
     /** Сервис получения прогноза погоды */
     private static WeatherService weatherService = new WWOWeatherService();
-
-    /** Список наименований городов */
-    private final ArrayList<String> places = new ArrayList<>();
 
     private final ComboBox<String> citiesBox = new ComboBox<>();
 
@@ -62,6 +60,7 @@ public class WeatherComponent extends Composite<Div> {
     public WeatherComponent() {}
 
     public WeatherComponent(MainView view) {
+        ArrayList<String> places = new ArrayList<>();
         errorLabel.getStyle().set("font-size", "18pt");
         getContent().setClassName("my-weather");
         citiesBox.setItems(places);

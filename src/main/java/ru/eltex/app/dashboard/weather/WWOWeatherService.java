@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 
@@ -34,13 +35,18 @@ public class WWOWeatherService implements WeatherService {
      * @throws IllegalArgumentException
      */
     public Weather getWeatherData(String city) throws IOException, IllegalArgumentException {
-        URL url;
-        StringBuilder response = new StringBuilder();
         logger.info("Получение погоды города " + city);
 
-        url = new URL( baseUrl + "key=" + key +"&q=" + city +
-                    "&num_of_days=2&tp=6&format=json&mca=no&lang=ru");
+        URL url = getURL(city);
+
+        String json = getWeatherJson(url);
+
+        return WeatherHelper.getWeather(json);
+    }
+
+    private String getWeatherJson(URL url) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        StringBuilder response = new StringBuilder();
         InputStream is;
         int status = connection.getResponseCode();
         if (status != HttpURLConnection.HTTP_OK)
@@ -56,8 +62,11 @@ public class WWOWeatherService implements WeatherService {
         }
         rd.close();
 
-        String json = response.toString();
+        return response.toString();
+    }
 
-        return WeatherHelper.getWeather(json);
+    private URL getURL(String city) throws MalformedURLException {
+        return new URL( baseUrl + "key=" + key +"&q=" + city +
+                "&num_of_days=2&tp=6&format=json&mca=no&lang=ru");
     }
 }

@@ -16,7 +16,6 @@ import static org.mockito.Mockito.when;
 
 public class CBRCurrencyServiceTest {
 
-    //final private static CurrencyHelper helper = mock(CurrencyHelper.class);
     private Logger logger = Logger.getLogger(CBRCurrencyServiceTest.class);
 
     @Test
@@ -37,7 +36,7 @@ public class CBRCurrencyServiceTest {
             when(helper.getCurrency(json)).thenReturn(list);
             currency = currencyService.getCurrency();
         } catch (IOException | IllegalArgumentException e) {
-            logger.error("Failed", e);
+            logger.error("Failed test", e);
         }
 
         assertNull(currency);
@@ -61,7 +60,7 @@ public class CBRCurrencyServiceTest {
             when(helper.getCurrency(json)).thenReturn(list);
             currency = currencyService.getCurrency();
         } catch (IOException | IllegalArgumentException e) {
-            logger.error("Failed", e);
+            logger.error("Failed test", e);
         }
 
         System.out.println(currency);
