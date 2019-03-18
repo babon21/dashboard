@@ -31,7 +31,7 @@
 ---------------------
 
 Клонировать репозиторий: 
-$ git clone https://github.com/babon21/dashboard
+$ git clone https://github.com/babon21/dashboard.git
 
 Выполнить в командной строке:
 
